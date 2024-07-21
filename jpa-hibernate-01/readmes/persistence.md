@@ -86,6 +86,79 @@
     - **jakarta.persistence.jdbc.user**: Nome de usuário para se conectar ao banco de dados.
     - **jakarta.persistence.jdbc.password**: Senha para se conectar ao banco de dados.
 
+   
+A diferença entre `RESOURCE_LOCAL` e `JTA` no contexto da JPA está relacionada à forma como as transações são gerenciadas. Vamos detalhar cada um:
+
+### `RESOURCE_LOCAL`
+
+- **Transação Local**: O tipo `RESOURCE_LOCAL` indica que as transações são gerenciadas localmente pelo próprio `EntityManager`. Isso significa que cada instância de `EntityManager` controla suas próprias transações.
+- **Contexto de Aplicação**: É comumente usado em aplicações stand-alone, como aplicações desktop ou aplicações Java SE que não utilizam um servidor de aplicações Java EE ou Jakarta EE.
+- **Gerenciamento de Transações**: O desenvolvedor é responsável por iniciar e finalizar as transações explicitamente usando `entityManager.getTransaction().begin()` e `entityManager.getTransaction().commit()` ou `rollback()`.
+- **Simplicidade**: É mais simples de configurar e gerenciar, adequado para aplicações que não precisam de coordenação de transações distribuídas ou globais.
+
+#### Exemplo:
+
+```xml
+<persistence-unit name="my-persistence-unit" transaction-type="RESOURCE_LOCAL">
+    <!-- Configurações -->
+</persistence-unit>
+```
+
+```java
+EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+EntityManager em = emf.createEntityManager();
+em.getTransaction().begin();
+// Operações de persistência
+em.getTransaction().commit();
+em.close();
+emf.close();
+```
+
+### `JTA` (Java Transaction API)
+
+- **Transação Gerenciada**: O tipo `JTA` indica que as transações são gerenciadas por um provedor de transações externo, geralmente um servidor de aplicações que suporta Java EE ou Jakarta EE.
+- **Contexto de Aplicação**: É utilizado em ambientes corporativos onde há necessidade de coordenação de transações distribuídas entre múltiplos recursos, como vários bancos de dados, sistemas de mensagens, etc.
+- **Gerenciamento de Transações**: As transações são gerenciadas pelo contêiner (como um servidor de aplicações), e o desenvolvedor geralmente não precisa iniciar ou finalizar as transações explicitamente. Em vez disso, o contêiner coordena as transações declaradas através de anotações (`@Transactional`) ou configurações no deployment descriptor.
+- **Coordenação de Transações Distribuídas**: Suporta transações distribuídas (também chamadas de transações globais) que podem abranger múltiplos recursos, proporcionando consistência entre diferentes sistemas.
+
+#### Exemplo:
+
+```xml
+<persistence-unit name="my-persistence-unit" transaction-type="JTA">
+    <!-- Configurações -->
+</persistence-unit>
+```
+
+```java
+// Dentro de um EJB ou outro componente gerenciado pelo contêiner
+@Stateless
+public class MyService {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Transactional
+    public void doSomething() {
+        // Operações de persistência
+    }
+}
+```
+
+### Resumo
+
+- **RESOURCE_LOCAL**:
+   - Gerenciamento de transações locais pelo `EntityManager`.
+   - Adequado para aplicações stand-alone.
+   - Desenvolvedor gerencia as transações explicitamente.
+
+- **JTA**:
+   - Gerenciamento de transações pelo contêiner.
+   - Adequado para aplicações corporativas que utilizam servidores de aplicação.
+   - Suporte para transações distribuídas.
+   - Transações geralmente são declarativas e coordenadas pelo contêiner.
+
+A escolha entre `RESOURCE_LOCAL` e `JTA` depende do ambiente de execução da aplicação e dos requisitos de transação. Para aplicações simples, `RESOURCE_LOCAL` pode ser suficiente, enquanto que `JTA` é mais adequado para ambientes corporativos complexos que requerem transações distribuídas.
+
 ### Resumo
 
 Este arquivo `persistence.xml` configura uma unidade de persistência chamada

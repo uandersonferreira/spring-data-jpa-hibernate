@@ -16,6 +16,7 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <!-- Hibernate Core: Biblioteca principal do Hibernate, responsável pelo ORM (Object-Relational Mapping) -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -23,13 +24,35 @@
         </dependency>
 
         <!-- Driver Postgresql https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <!-- Driver PostgreSQL: Driver JDBC necessário para a conexão do Hibernate com o banco de dados PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
+        <!-- HikariCP: Implementação de pool de conexões de alto desempenho usada pelo Hibernate para gerenciar as conexões com o banco de dados -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+
 
     </dependencies>
 
 </project>
+        <!--
+        Hibernate Core:
+        O Hibernate Core é a biblioteca principal do Hibernate que fornece o mecanismo de ORM (Object-Relational Mapping), permitindo mapear classes Java para tabelas de banco de dados e vice-versa.
+
+        Driver PostgreSQL:
+        Este é o driver JDBC para o banco de dados PostgreSQL. Ele permite que a aplicação Java se conecte e interaja com um banco de dados PostgreSQL, utilizando o Hibernate para executar operações de persistência.
+
+        HikariCP:
+        HikariCP é uma implementação de pool de conexões de banco de dados conhecida por seu alto desempenho e baixa latência. Ele gerencia as conexões com o banco de dados, permitindo que o Hibernate reutilize conexões de forma eficiente, melhorando o desempenho da aplicação.
+
+
+
+        -->
