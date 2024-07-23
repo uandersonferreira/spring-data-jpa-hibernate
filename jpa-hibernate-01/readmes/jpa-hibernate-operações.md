@@ -911,6 +911,81 @@ VALUES ('Uanderson Oliveira');
 **Explicação:** Quando você chama `flush`, todas as mudanças pendentes no contexto de persistência são enviadas para o
 banco de dados, mas a transação ainda não é comitada.
 
+### `entityManager.contains(entity)`
+
+**Descrição:** O método `contains` é usado para verificar se uma entidade está no contexto de persistência. Ele retorna `true` se a entidade estiver no contexto de persistência e `false` se não estiver.
+
+**Uso:**
+
+```java
+Student student = entityManager.find(Student.class, 1L);
+boolean isManaged = entityManager.contains(student);
+```
+
+**SQL Correspondente:** Nenhum SQL é gerado para esta operação.
+
+### Exemplo de Comportamento
+
+```java
+// Criar a fábrica de EntityManager (EntityManagerFactory)
+try (EntityManagerFactory entityManagerFactory =
+             new HibernatePersistenceProvider().createContainerEntityManagerFactory(
+                     new MyPersistenceUnitInfo(), properties)) {
+
+    // Criar o EntityManager que gerencia o contexto de persistência
+    try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
+
+        // Iniciar uma transação
+        entityManager.getTransaction().begin();
+
+        // Recuperar uma entidade no estado 'MANAGED'
+        Student student = entityManager.find(Student.class, 1L);
+
+        // Remover a entidade
+        entityManager.remove(student);
+
+        // Verificar se a entidade ainda está no contexto de persistência
+        boolean isManaged = entityManager.contains(student);
+        System.out.println(isManaged); // Esperado: false
+
+        // Confirmar a transação (salvar as alterações no banco de dados)
+        entityManager.getTransaction().commit();
+
+        // Imprimir a entidade
+        System.out.println(student);
+    }
+}
+```
+
+### Explicação:
+
+1. **Recuperação da Entidade:**
+    - A entidade `Student` é recuperada do banco de dados usando `entityManager.find(Student.class, 1L)`. Neste momento, a entidade está no estado gerenciado (`MANAGED`).
+
+2. **Remoção da Entidade:**
+    - A entidade `student` é removida do contexto de persistência com `entityManager.remove(student)`. Isso marca a entidade para remoção no banco de dados quando a transação for confirmada.
+
+3. **Verificação com `contains`:**
+    - O método `entityManager.contains(student)` é usado para verificar se a entidade `student` ainda está no contexto de persistência. Após a chamada para `remove`, a entidade não está mais no contexto de persistência, então `contains` retorna `false`.
+
+4. **Confirmação da Transação:**
+    - A transação é confirmada com `entityManager.getTransaction().commit()`, persistindo a remoção no banco de dados.
+
+**Comportamento Detalhado:**
+- **Antes da Remoção:**
+    - `entityManager.find(Student.class, 1L)` carrega a entidade `Student` com ID 1 do banco de dados e a coloca no contexto de persistência. A entidade está no estado `MANAGED`.
+    - `entityManager.contains(student)` retornaria `true` neste ponto, pois a entidade está no contexto de persistência.
+
+- **Após a Remoção:**
+    - `entityManager.remove(student)` desanexa a entidade `student` do contexto de persistência, marcando-a para remoção.
+    - `entityManager.contains(student)` retorna `false` porque a entidade foi removida do contexto de persistência.
+    - A confirmação da transação (`commit`) efetua a remoção no banco de dados.
+
+### Considerações Importantes:
+- **Estado da Entidade:** `contains` é útil para verificar se uma entidade está sendo gerenciada pelo `EntityManager` no momento.
+- **Uso Comum:** É frequentemente usado para verificar se uma entidade desanexada precisa ser sincronizada novamente com o contexto de persistência usando métodos como `merge`.
+- **Sem Geração de SQL:** O método `contains` opera apenas no contexto de persistência e não gera nenhum SQL.
+
 ### Resumo dos Métodos
 
 - **`persist`**: Salva uma nova entidade no banco de dados.
@@ -929,6 +1004,9 @@ banco de dados, mas a transação ainda não é comitada.
     - **SQL:** Nenhum SQL gerado.
 - **`flush`**: Sincroniza o contexto de persistência com o banco de dados sem comitar a transação.
     - **SQL:** Depende das operações pendentes.
+- **`contains`**: Verifica se uma entidade está no contexto de persistência.
+    - **SQL:** Nenhum SQL gerado.
+  
 
 Esses métodos são fundamentais para gerenciar o ciclo de vida das entidades em aplicações JPA/Hibernate, permitindo uma
 interação eficiente e flexível com o banco de dados.
