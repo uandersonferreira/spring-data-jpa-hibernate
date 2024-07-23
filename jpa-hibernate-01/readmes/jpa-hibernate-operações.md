@@ -369,14 +369,19 @@ próxima sincronização do contexto de persistência com o banco de dados.
 
 ## Estratégias para Tratamento de Deleção envolvendo Associações
 
-Entender como gerenciar a deleção de registros em um banco de dados relacional, especialmente quando há múltiplas relações entre tabelas, é crucial para manter a integridade dos dados. Aqui estão algumas abordagens e boas práticas para tratar essas situações.
+Entender como gerenciar a deleção de registros em um banco de dados relacional, especialmente quando há múltiplas
+relações entre tabelas, é crucial para manter a integridade dos dados. Aqui estão algumas abordagens e boas práticas
+para tratar essas situações.
 
 ### Tratamento de Deleção em Associações
 
 1. **Cascade Delete (Deleção em Cascata)**
-    - **Definição**: Permite que a deleção de um registro em uma tabela resulte automaticamente na deleção dos registros relacionados em outras tabelas.
-    - **Uso**: Configurado em entidades JPA com a anotação `@OneToMany`, `@ManyToOne`, `@OneToOne`, ou `@ManyToMany` com a propriedade `cascade = CascadeType.REMOVE`.
-    - **Cuidados**: Pode ser perigoso se não for usado corretamente, pois pode resultar na deleção de muitos registros relacionados inesperadamente.
+    - **Definição**: Permite que a deleção de um registro em uma tabela resulte automaticamente na deleção dos registros
+      relacionados em outras tabelas.
+    - **Uso**: Configurado em entidades JPA com a anotação `@OneToMany`, `@ManyToOne`, `@OneToOne`, ou `@ManyToMany` com
+      a propriedade `cascade = CascadeType.REMOVE`.
+    - **Cuidados**: Pode ser perigoso se não for usado corretamente, pois pode resultar na deleção de muitos registros
+      relacionados inesperadamente.
 
    **Exemplo**:
    ```java
@@ -393,8 +398,10 @@ Entender como gerenciar a deleção de registros em um banco de dados relacional
 
 2. **Restrict Delete (Restrição de Deleção)**
     - **Definição**: Impede a deleção de um registro se houver registros relacionados em outras tabelas.
-    - **Uso**: Configurado no banco de dados com restrições de chave estrangeira (`FOREIGN KEY`) com a opção `ON DELETE RESTRICT`.
-    - **Cuidados**: Assegura que não ocorra deleção de registros essenciais, mas requer tratamento de exceções na aplicação.
+    - **Uso**: Configurado no banco de dados com restrições de chave estrangeira (`FOREIGN KEY`) com a
+      opção `ON DELETE RESTRICT`.
+    - **Cuidados**: Assegura que não ocorra deleção de registros essenciais, mas requer tratamento de exceções na
+      aplicação.
 
    **Exemplo SQL**:
    ```sql
@@ -407,10 +414,12 @@ Entender como gerenciar a deleção de registros em um banco de dados relacional
 
 ### Estratégias para Deleção Lógica
 
-Quando a deleção física (remoção do registro da tabela) não é desejável devido a múltiplas relações ou necessidades de auditoria/histórico, a deleção lógica é uma boa prática.
+Quando a deleção física (remoção do registro da tabela) não é desejável devido a múltiplas relações ou necessidades de
+auditoria/histórico, a deleção lógica é uma boa prática.
 
 1. **Deleção Lógica com Campo de Status**
-    - **Definição**: Em vez de deletar fisicamente o registro, um campo na tabela indica se o registro está ativo ou deletado.
+    - **Definição**: Em vez de deletar fisicamente o registro, um campo na tabela indica se o registro está ativo ou
+      deletado.
     - **Uso**: Adiciona-se um campo como `isDeleted` ou `status` na entidade e filtra os registros baseados nesse campo.
     - **Cuidados**: Todas as consultas devem ser ajustadas para considerar o campo de deleção lógica.
 
@@ -461,11 +470,13 @@ Quando a deleção física (remoção do registro da tabela) não é desejável 
    }
    ```
 
-
 ### Conclusão
 
-A escolha entre deleção física e lógica depende do contexto da aplicação e dos requisitos específicos. Entender as implicações de cada abordagem e aplicar as boas práticas adequadas ajuda a manter a integridade e a consistência dos dados em sistemas complexos com múltiplas relações.
-Criando um exemplo de aplicação Spring Boot que utiliza deleção lógica e controle de versão. A aplicação terá uma entidade `Student` com campos de deleção lógica (`isDeleted`) e versão (`version`).
+A escolha entre deleção física e lógica depende do contexto da aplicação e dos requisitos específicos. Entender as
+implicações de cada abordagem e aplicar as boas práticas adequadas ajuda a manter a integridade e a consistência dos
+dados em sistemas complexos com múltiplas relações.
+Criando um exemplo de aplicação Spring Boot que utiliza deleção lógica e controle de versão. A aplicação terá uma
+entidade `Student` com campos de deleção lógica (`isDeleted`) e versão (`version`).
 
 ### 1. Dependências no `pom.xml`
 
@@ -634,7 +645,9 @@ public class JpaHibernateApplication {
 ### 6. `entityManager.detach(entity)`
 
 **Descrição:** O método `detach` é usado para desassociar uma entidade do contexto de persistência, fazendo com que ela
-transite do estado "gerenciado" para o estado "detached".
+transite do estado "gerenciado" para o estado "desanexado" (detached). Uma entidade desanexada não será monitorada
+pelo `EntityManager` para mudanças e, portanto, qualquer modificação feita após o `detach` não será sincronizada com o
+banco de dados.
 
 **Uso:**
 
@@ -645,10 +658,149 @@ entityManager.
 detach(student);
 ```
 
-**SQL Correspondente:** Nenhum SQL é gerado para esta operação.
+**SQL Correspondente:** Nenhum SQL é gerado diretamente por esta operação.
 
-**Explicação:** Quando você chama `detach`, a entidade é removida do contexto de persistência e quaisquer mudanças
-feitas a ela após esse ponto não serão sincronizadas com o banco de dados.
+**Explicação:** Quando você chama `detach`, a entidade é removida do contexto de persistência. Isso significa que
+qualquer alteração feita na entidade após esse ponto não será gerenciada pelo `EntityManager` e não será sincronizada
+com o banco de dados ao confirmar a transação.
+
+### Exemplos de Comportamento
+
+#### Comportamento somente com o `detach`:
+
+```java
+// Criar a fábrica de EntityManager (EntityManagerFactory)
+try(EntityManagerFactory entityManagerFactory =
+        new HibernatePersistenceProvider().createContainerEntityManagerFactory(
+                new MyPersistenceUnitInfo(), properties)){
+
+        // Criar o EntityManager que gerencia o contexto de persistência
+        try(
+EntityManager entityManager = entityManagerFactory.createEntityManager()){
+
+        // Iniciar uma transação
+        entityManager.
+
+getTransaction().
+
+begin();
+
+// Encontrar a entidade Student
+Student student = entityManager.find(Student.class, 1L);
+
+// Modificar o nome da entidade
+        student.
+
+setName("Uanderson");
+
+// Desanexar a entidade do contexto de persistência
+        entityManager.
+
+detach(student);
+
+// Confirmar a transação (salvar as alterações no banco de dados)
+        entityManager.
+
+getTransaction().
+
+commit();
+
+// A entidade student é impressa, mas a alteração não foi salva no banco de dados
+        System.out.
+
+println(student);
+    }
+            }
+```
+
+**Passos:**
+
+1. O `entityManager.find(Student.class, 1L)` carrega a entidade `Student` com `id` 1 do banco de dados e a coloca no
+   contexto de persistência.
+2. A propriedade `name` do `student` é modificada para "Uanderson".
+3. O `entityManager.detach(student)` desanexa a entidade `student` do contexto de persistência.
+4. Quando a transação é confirmada (`commit`), a alteração do nome não é persistida no banco de dados porque a entidade
+   foi desanexada antes da confirmação.
+
+**SQL Correspondente:** Nenhum SQL é gerado, pois a entidade foi desanexada antes do `commit`.
+
+#### Comportamento com `flush`:
+
+```java
+// Criar a fábrica de EntityManager (EntityManagerFactory)
+try(EntityManagerFactory entityManagerFactory =
+        new HibernatePersistenceProvider().createContainerEntityManagerFactory(
+                new MyPersistenceUnitInfo(), properties)){
+
+        // Criar o EntityManager que gerencia o contexto de persistência
+        try(
+EntityManager entityManager = entityManagerFactory.createEntityManager()){
+
+        // Iniciar uma transação
+        entityManager.
+
+getTransaction().
+
+begin();
+
+// Encontrar a entidade Student
+Student student = entityManager.find(Student.class, 1L);
+
+// Modificar o nome da entidade
+        student.
+
+setName("Uanderson");
+
+// Sincronizar as alterações pendentes no banco de dados
+        entityManager.
+
+flush();
+
+// Desanexar a entidade do contexto de persistência
+        entityManager.
+
+detach(student);
+
+// Confirmar a transação (salvar as alterações no banco de dados)
+        entityManager.
+
+getTransaction().
+
+commit();
+
+// A entidade student é impressa, e a alteração foi salva no banco de dados
+        System.out.
+
+println(student);
+    }
+            }
+```
+
+**Passos:**
+
+1. O `entityManager.find(Student.class, 1L)` carrega a entidade `Student` com `id` 1 do banco de dados e a coloca no
+   contexto de persistência.
+2. A propriedade `name` do `student` é modificada para "Uanderson".
+3. O `entityManager.flush()` sincroniza as alterações pendentes no banco de dados. Isso força a execução de qualquer SQL
+   necessário para refletir as mudanças feitas até o momento.
+4. O `entityManager.detach(student)` desanexa a entidade `student` do contexto de persistência.
+5. Quando a transação é confirmada (`commit`), a alteração do nome já foi persistida no banco de dados pelo `flush()`,
+   então a confirmação não tem efeito adicional no banco de dados.
+
+**SQL Correspondente:**
+
+- O `entityManager.flush()` gera um `UPDATE` no banco de dados:
+  ```sql
+  UPDATE student SET name = 'Uanderson' WHERE id = 1;
+  ```
+
+### Resumo das Diferenças
+
+**Primeiro Caso:** A entidade é desanexada antes do `commit`, portanto, nenhuma alteração é persistida no banco de
+dados.
+
+**Segundo Caso:** O `flush()` é chamado antes do `detach()`, forçando a sincronização das alterações pendentes com o
+banco de dados. A modificação é persistida no banco de dados mesmo após o `detach()`.
 
 ### 7. `entityManager.clear()`
 
