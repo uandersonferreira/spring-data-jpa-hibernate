@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/readmes/jpa-hibernate-operações.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/readmes/persistence.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/config/MyPersistenceUnitInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/entities/City.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/entities/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/Clear.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/Contains.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/DetachAndFlush.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/FindAndGetReference.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/FindAndRefresh.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/Merge.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/PersistAndCascade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/PersistAndFind.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/java/br/com/uanderson/test/Remove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/resources/META-INF/persistence.JPA.2.x.xml.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/resources/META-INF/persistence.JPA.3.x.xml.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate-01/src/main/resources/META-INF/persistence.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 0
+}]]></component>
+  <component name="ProjectId" id="2jd5oCzb9itU9iXijYl4sNY5HqR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/uanderson/Documentos/spring-data-jpa-hibernate",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="" />
+      <created>1721704285875</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1721704285875</updated>
+      <workItem from="1721704286937" duration="12000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
