@@ -1,18 +1,13 @@
 package br.com.uanderson.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
-public class Student {
-
+public class City {
     @Id
     private Long id;
-
     private String name;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "city")
-    private City city;
 
     public Long getId() {
         return id;
@@ -30,19 +25,11 @@ public class Student {
         this.name = name;
     }
 
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
     @Override
     public String toString() {
-        return "Student{" +
+        return "City{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
     }
-}//class
+}

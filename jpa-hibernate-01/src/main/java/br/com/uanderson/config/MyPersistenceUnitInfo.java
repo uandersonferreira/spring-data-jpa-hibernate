@@ -72,7 +72,10 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
     // Retorna a lista de nomes de classes gerenciadas pela unidade de persistência
     @Override
     public List<String> getManagedClassNames() {
-        return List.of("br.com.uanderson.entities.Student");
+        return List.of(
+                "br.com.uanderson.entities.Student",
+                "br.com.uanderson.entities.City"
+        );
     }
 
     // Define se classes não listadas devem ser excluídas (false para incluir todas as classes anotadas)
