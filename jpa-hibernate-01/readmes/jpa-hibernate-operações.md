@@ -314,34 +314,107 @@ public class FindAndRefresh {
 
 ### 4. `entityManager.merge(entity)`
 
-**Descrição:** O método `merge` é usado para atualizar uma entidade existente no banco de dados ou para salvar uma nova
-entidade, caso ela ainda não exista. Ele retorna uma instância gerenciada da entidade.
+**Descrição:** O método `merge` é usado para sincronizar o estado de uma entidade desanexada (ou uma nova entidade) com
+o contexto de persistência. Ele retorna uma instância gerenciada da entidade, refletindo o estado persistido no banco de
+dados. Se a entidade já existir no banco de dados, ela é atualizada; se não, uma nova entidade é inserida.
 
 **Uso:**
 
 ```java
-Student detachedStudent = new Student();
-detachedStudent.
+Student student = new Student();
+student.setId(1L);
+student.setName("Uanderson merged");
+
+Student mergedStudent = entityManager.merge(student);
+```
+
+**SQL Correspondente:** Dependendo do estado da entidade, a operação pode resultar em um `UPDATE` ou um `INSERT`.
+
+### Exemplo de Comportamento
+
+```java
+// Criar a fábrica de EntityManager (EntityManagerFactory)
+try(EntityManagerFactory entityManagerFactory =
+        new HibernatePersistenceProvider().createContainerEntityManagerFactory(
+                new MyPersistenceUnitInfo(), properties)){
+
+        // Criar o EntityManager que gerencia o contexto de persistência
+        try(
+EntityManager entityManager = entityManagerFactory.createEntityManager()){
+
+        // Iniciar uma transação
+        entityManager.
+
+getTransaction().
+
+begin();
+
+// Criar uma nova entidade Student
+Student student = new Student();
+        student.
 
 setId(1L);
-detachedStudent.
+        student.
 
-setName("Nome Atualizado");
+setName("Uanderson merged");
 
-Student managedStudent = entityManager.merge(detachedStudent);
+// Usar merge para sincronizar a entidade com o contexto de persistência
+Student mergedStudent = entityManager.merge(student);
+
+// Confirmar a transação (salvar as alterações no banco de dados)
+        entityManager.getTransaction().commit();
+
+// A entidade student é impressa, e a alteração foi salva no banco de dados
+        System.out.println(mergedStudent);
+        
+        }
+            }
 ```
+
+**Passos:**
+
+1. Uma nova instância de `Student` é criada e suas propriedades são definidas.
+2. O método `merge` é chamado, o que faz com que o estado da entidade desanexada `student` seja sincronizado com o
+   contexto de persistência.
+3. Se a entidade `Student` com `id` 1 já existir no banco de dados, ela é atualizada com o novo nome "Uanderson merged".
+   Se não existir, uma nova entidade é inserida.
+4. A transação é confirmada (`commit`), persistindo a alteração no banco de dados.
+5. A entidade `mergedStudent` refletirá o estado gerenciado da entidade após a operação de `merge`.
 
 **SQL Correspondente:**
 
-```sql
-UPDATE Student
-SET name = 'Nome Atualizado'
-WHERE id = 1;
-```
+- Se a entidade já existe no banco de dados, um `UPDATE` é gerado:
+  ```sql
+  UPDATE student SET name = 'Uanderson merged' WHERE id = 1;
+  ```
+- Se a entidade não existe, um `INSERT` é gerado:
+  ```sql
+  INSERT INTO student (id, name) VALUES (1, 'Uanderson merged');
+  ```
 
-**Explicação:** `merge` é usado quando você tem uma entidade que não está atualmente gerenciada pelo contexto de
-persistência (detached) e você quer aplicar as mudanças feitas a ela no banco de dados. Ele retorna uma nova instância
-gerenciada da entidade.
+### Comportamento do `merge`
+
+**Estado da Entidade Antes do `merge`:**
+
+- **Desanexada (Detached):** Se a entidade estava previamente no contexto de persistência e foi desanexada, o `merge`
+  trará a entidade de volta ao contexto, atualizando seu estado no banco de dados.
+- **Nova (New):** Se a entidade é nova (nunca foi persistida), o `merge` persistirá a nova entidade no banco de dados.
+
+**Após o `merge`:**
+
+- A instância retornada pelo `merge` está no estado gerenciado. As mudanças feitas nesta instância serão rastreadas
+  pelo `EntityManager` e sincronizadas com o banco de dados quando a transação for confirmada.
+- A instância original passada para o `merge` não é gerenciada. Qualquer mudança feita nesta instância após o `merge`
+  não será rastreada pelo `EntityManager`.
+
+### Considerações Importantes:
+
+- **`merge` vs. `persist`:** Use `merge` para sincronizar entidades desanexadas ou novas com o contexto de persistência.
+  Use `persist` apenas para novas entidades.
+- **Retorno do `merge`:** Sempre trabalhe com a instância retornada pelo `merge`, pois esta é a instância gerenciada
+  pelo `EntityManager`.
+- **Efeito no Banco de Dados:** O comportamento do `merge` no banco de dados dependerá se a entidade já existe ou não,
+  resultando em um `UPDATE` ou `INSERT`.
 
 ### 5. `entityManager.remove(entity)`
 

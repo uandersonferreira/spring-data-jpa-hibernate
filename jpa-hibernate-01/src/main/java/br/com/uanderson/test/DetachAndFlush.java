@@ -79,6 +79,8 @@ public class DetachAndFlush {
  * banco de dados pelo flush(), então a confirmação não tem efeito adicional no banco de dados.
  * <p>
  * <p>
+ * <p>
+ * <p>
  * /*
  * Resumo do Fluxo
  * 1. Configuração: Configura o EntityManagerFactory com a unidade de persistência especificada no persistence.xml.
