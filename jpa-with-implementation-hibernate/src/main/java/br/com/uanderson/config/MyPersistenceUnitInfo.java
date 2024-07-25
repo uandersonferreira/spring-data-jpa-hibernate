@@ -74,7 +74,9 @@ public class MyPersistenceUnitInfo implements PersistenceUnitInfo {
     public List<String> getManagedClassNames() {
         return List.of(
                 "br.com.uanderson.entities.Student",
-                "br.com.uanderson.entities.City"
+                "br.com.uanderson.entities.Book",
+                "br.com.uanderson.entities.Escola",
+                "br.com.uanderson.entities.Escola$Aluno"//$ representa classes aninhadas
         );
     }
 
