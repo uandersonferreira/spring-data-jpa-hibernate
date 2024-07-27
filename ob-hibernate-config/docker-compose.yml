@@ -1,0 +1,21 @@
+version: '3'
+services:
+
+  ### MySQL database for Hibernate example
+  db-ob-hibernate:
+    container_name: db-ob-hibernate
+    image: mysql
+    environment:
+      MYSQL_DATABASE: db-ob-hibernate
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test123
+      MYSQL_ROOT_PASSWORD: root # Senha do usuário root
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    volumes:
+      - db-ob-hibernate:/var/lib/mysql
+
+volumes:
+  db-ob-hibernate: #Volume para dados

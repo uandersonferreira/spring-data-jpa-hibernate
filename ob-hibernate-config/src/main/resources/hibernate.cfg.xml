@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/db-ob-hibernate</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="current_session_context_class">thread</property>
+
+        <!-- DB schema will be updated if needed -->
+        <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <!-- Models/Entities -->
+
+
+    </session-factory>
+</hibernate-configuration>
+
+        <!--
+        Este arquivo de configuração (hibernate.cfg.xml) possui o mesmo propósito
+        do arquivo application.properties no Spring, que é definir as propriedades
+        e configurações necessárias para que a aplicação se conecte ao banco de dados
+        e utilize o Hibernate de forma adequada.
+
+        Explicação das Propriedades
+        connection.url: Especifica a URL de conexão ao banco de dados MySQL.
+        connection.driver_class: Define a classe do driver JDBC que será usada para conectar
+        ao banco de dados. Aqui, com.mysql.cj.jdbc.Driver é o driver JDBC para MySQL.
+        connection.username: Nome de usuário para autenticação no banco de dados.
+        connection.password: Senha correspondente ao usuário especificado.
+        dialect: Informa ao Hibernate o dialeto SQL específico do banco de dados que está sendo usado. org.hibernate.dialect.MySQLDialect é o dialeto para MySQL.
+        show_sql: Quando configurado como true, faz com que o Hibernate exiba as consultas SQL geradas no console.
+        format_sql: Quando configurado como true, formata as consultas SQL exibidas para uma melhor legibilidade.
+        current_session_context_class: Define o contexto da sessão atual. thread significa que a sessão atual está associada ao thread atual.
+        hibernate.hbm2ddl.auto: Configura como o Hibernate deve manipular o esquema do banco de dados. create recria o esquema cada vez que a aplicação é iniciada.
+
+        Sintaxe do JDBC URL
+        jdbc:mysql://localhost:3306/db-ob-hibernate
+
+        jdbc:mysql://: Indica que estamos usando o JDBC para conectar a um banco de dados MySQL.
+        localhost: O servidor onde o MySQL está rodando. localhost refere-se à máquina local.
+        3306: A porta padrão em que o MySQL escuta por conexões.
+        db-ob-hibernate: O nome do banco de dados ao qual queremos nos conectar.
+
+        -->
