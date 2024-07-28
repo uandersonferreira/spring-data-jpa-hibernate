@@ -15,7 +15,7 @@ services:
     expose:
       - 3306
     volumes:
-      - db-ob-hibernate:/var/lib/mysql
+      - volumes-ob-hibernate:/var/lib/mysql
 
 volumes:
-  db-ob-hibernate: #Volume para dados
+  volumes-ob-hibernate: #Volume para dados

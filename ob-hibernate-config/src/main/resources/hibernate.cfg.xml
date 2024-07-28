@@ -16,8 +16,16 @@
         <!-- DB schema will be updated if needed -->
         <property name="hibernate.hbm2ddl.auto">create</property>
 
+        <!--Para executar automaticamente os sql dentro de data.sql assim como faz com o file d enome import.sql por Default. -->
+        <!-- Dessa forma, executa somente o data.sql e ignora o import.sql -->
+<!--        <property name="hibernate.hbm2ddl.import_files">data.sql</property> -->
+
+        <!-- Para importar multiplos arquivos sql utilizamos-->
+        <property name="hibernate.hbm2ddl.import_files">import.sql, data.sql</property> <!-- Dessa forma, executa o que está definido em ambos os arquivos -->
+
         <!-- Models/Entities -->
         <mapping class="br.com.uanderson.entities.Employee"/>
+        <mapping class="br.com.uanderson.entities.Car"/>
 
     </session-factory>
 </hibernate-configuration>
