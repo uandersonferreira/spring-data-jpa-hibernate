@@ -4,7 +4,7 @@
 
 1. Java Database Connectivity (JDBC)
 
-2. JPA (Java Persistence API) Specification
+2. JPA (Java Persistence API) Specification (javax.persistence mudou para jakarta.persistence)
     - Implementations:
         - Hibernate (ORM object Relational Mapping)
         - EclipseLink

@@ -1,4 +1,4 @@
-package br.com.uanderson;
+package br.com.uanderson.jdbc;
 
 public class Coche {
 
