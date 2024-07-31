@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-class EmployeeDAOImplTest {
+/**
+ * Testes para as operações CRUD
+ */
+class EmployeeCRUDTest {
     EmployeeDAO dao;
 
     @BeforeEach
