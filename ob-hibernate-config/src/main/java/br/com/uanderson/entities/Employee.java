@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * Representa uma tabela na base de dados
@@ -31,6 +32,62 @@ public class Employee implements Serializable {
     @Column(name = "register_date")
     private LocalDateTime registerDate;
 
+    /**
+     * Indica que `nicknames` é uma coleção de elementos básicos. A anotação @ElementCollection
+     * é usada para mapear coleções de tipos básicos ou embutidos.
+     *
+     * @ElementCollection
+     * A anotação @ElementCollection é usada no JPA (Java Persistence API) para mapear uma
+     * coleção de tipos básicos ou classes incorporáveis (embeddable) em uma entidade.
+     * Isso é útil quando você tem uma coleção de valores simples, como Strings ou Integers, ou
+     * uma coleção de objetos embutidos que não têm uma identidade independente, ou seja,
+     * eles não são entidades por si só.
+     *
+     * @CollectionTable
+     * Define a tabela de coleção que armazenará os elementos da coleção.
+     * - `name` : Nome da tabela onde os elementos da coleção serão armazenados. No caso, "employee_nicknames".
+     * - `joinColumns` : Especifica a coluna de junção que faz referência à chave primária da entidade `Employee`.
+     *   No caso, a coluna `employee_id` na tabela `employee_nicknames` será usada como chave estrangeira para associar
+     *   os apelidos ao funcionário correspondente.
+     *
+     * @Column
+     * Define o nome da coluna que armazenará os valores da coleção. No caso, "nickname".
+     *
+     * Estrutura da tabela gerada:
+     * ```
+     * CREATE TABLE employee_nicknames (
+     *     employee_id BIGINT NOT NULL,        // Chave estrangeira referenciando a chave primária da tabela ob_employees
+     *     nickname VARCHAR(255),              // Coluna para armazenar cada apelido do empregado
+     *     PRIMARY KEY (employee_id, nickname), // Chave primária composta
+     *     FOREIGN KEY (employee_id) REFERENCES ob_employees(id) // Define employee_id como chave estrangeira
+     * );
+     * ```
+     */
+    @ElementCollection
+    @CollectionTable(name = "employee_nicknames", joinColumns = @JoinColumn(name = "employee_id"))
+    @Column(name = "nickname")
+    private List<String> nickNames = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "employee_postalcode", joinColumns = @JoinColumn(name = "employee_id"))
+    @Column(name = "postal_code")
+    private List<Integer> postalCode = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "employee_creditcards", joinColumns = @JoinColumn(name = "employee_id"))
+    @Column(name = "credit_cards")
+    private Set<String> creditCards = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "employee_phones", joinColumns = @JoinColumn(name = "employee_id"))
+    @MapKeyColumn(name = "phone_key") // Nome da coluna que armazena as chaves do mapa (números de telefone)
+    @Column(name = "phone_value") // Nome da coluna que armazena os valores do mapa (companhias telefônicas)
+    private Map<String, String> phones = new HashMap<>();
+
+    @Enumerated(EnumType.STRING)//Por default EnumType value is ORDINAL. (0,1,2,3..))
+    EmployeeCategory category;
+
+    
     // Constructors
     public Employee() {
     }
@@ -136,6 +193,46 @@ public class Employee implements Serializable {
         this.lastName = lastName;
     }
 
+    public List<String> getNickNames() {
+        return nickNames;
+    }
+
+    public void setNickNames(List<String> nickNames) {
+        this.nickNames = nickNames;
+    }
+
+    public List<Integer> getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(List<Integer> creditCards) {
+        this.postalCode = creditCards;
+    }
+
+    public Set<String> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(Set<String> creditCards) {
+        this.creditCards = creditCards;
+    }
+
+    public Map<String, String> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Map<String, String> phones) {
+        this.phones = phones;
+    }
+
+    public EmployeeCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(EmployeeCategory category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Employee {\n" +
@@ -148,6 +245,11 @@ public class Employee implements Serializable {
                 "  married: " + married + ",\n" +
                 "  birthDate: " + birthDate + ",\n" +
                 "  registerDate: " + registerDate + "\n" +
+                "  nickNames: " + nickNames + "\n" +
+                "  postalCode: " + postalCode + "\n" +
+                "  creditCards: " + creditCards + "\n" +
+                "  phones: " + phones + "\n" +
+                "  category: " + category + "\n" +
                 '}';
     }
 
