@@ -1,9 +1,11 @@
 package br.com.uanderson.entities;
 
+import br.com.uanderson.dao.DirectionDAOImpl;
 import br.com.uanderson.dao.EmployeeDAOImpl;
 import br.com.uanderson.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -97,5 +99,31 @@ class EmployeeTest {
         dao.create(employee);
 
         System.out.println(employee);
+    }
+
+
+    @Test
+    @DisplayName("Teste para provar a associação One to One entre Employee e Direction")
+    void employeeDirectionTest(){
+        Direction direction = new Direction(null, "ELM street", "cansas", "Croacia");
+
+        Employee employee = new Employee(
+                "Employee one to one",
+                "Doe",
+                "employeeonetoone@example.com",
+                30,
+                5000.0,
+                true,
+                LocalDate.of(1990, 1, 1),
+                LocalDateTime.now()
+        );
+
+        employee.setDirection(direction);
+
+        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+        employeeDAO.create(employee);
+
+
+
     }
 }//class

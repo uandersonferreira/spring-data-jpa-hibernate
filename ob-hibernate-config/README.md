@@ -134,3 +134,12 @@ E também podemos inserir novos dados apartir do Java ao utilizar os metódos da
         sessionFactory.close();
         HibernateUtil.shutdown();
 ```
+
+## Associações entre Entidades
+
+* @OneToOne 
+  * @OneToOne
+  * @JoinColumn
+  * @JoinTable
+  * @PrimaryKeyJoinColumn
+  * @MapsId

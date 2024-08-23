@@ -18,7 +18,8 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "first_name", length = 30, nullable = false)//Por default usa o nome do atributo com camelCase e não em snake_case
+    @Column(name = "first_name", length = 30, nullable = false)
+//Por default usa o nome do atributo com camelCase e não em snake_case
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
@@ -36,30 +37,25 @@ public class Employee implements Serializable {
      * Indica que `nicknames` é uma coleção de elementos básicos. A anotação @ElementCollection
      * é usada para mapear coleções de tipos básicos ou embutidos.
      *
-     * @ElementCollection
-     * A anotação @ElementCollection é usada no JPA (Java Persistence API) para mapear uma
+     * @ElementCollection A anotação @ElementCollection é usada no JPA (Java Persistence API) para mapear uma
      * coleção de tipos básicos ou classes incorporáveis (embeddable) em uma entidade.
      * Isso é útil quando você tem uma coleção de valores simples, como Strings ou Integers, ou
      * uma coleção de objetos embutidos que não têm uma identidade independente, ou seja,
      * eles não são entidades por si só.
-     *
-     * @CollectionTable
-     * Define a tabela de coleção que armazenará os elementos da coleção.
+     * @CollectionTable Define a tabela de coleção que armazenará os elementos da coleção.
      * - `name` : Nome da tabela onde os elementos da coleção serão armazenados. No caso, "employee_nicknames".
      * - `joinColumns` : Especifica a coluna de junção que faz referência à chave primária da entidade `Employee`.
-     *   No caso, a coluna `employee_id` na tabela `employee_nicknames` será usada como chave estrangeira para associar
-     *   os apelidos ao funcionário correspondente.
-     *
-     * @Column
-     * Define o nome da coluna que armazenará os valores da coleção. No caso, "nickname".
-     *
+     * No caso, a coluna `employee_id` na tabela `employee_nicknames` será usada como chave estrangeira para associar
+     * os apelidos ao funcionário correspondente.
+     * @Column Define o nome da coluna que armazenará os valores da coleção. No caso, "nickname".
+     * <p>
      * Estrutura da tabela gerada:
      * ```
      * CREATE TABLE employee_nicknames (
-     *     employee_id BIGINT NOT NULL,        // Chave estrangeira referenciando a chave primária da tabela ob_employees
-     *     nickname VARCHAR(255),              // Coluna para armazenar cada apelido do empregado
-     *     PRIMARY KEY (employee_id, nickname), // Chave primária composta
-     *     FOREIGN KEY (employee_id) REFERENCES ob_employees(id) // Define employee_id como chave estrangeira
+     * employee_id BIGINT NOT NULL,        // Chave estrangeira referenciando a chave primária da tabela ob_employees
+     * nickname VARCHAR(255),              // Coluna para armazenar cada apelido do empregado
+     * PRIMARY KEY (employee_id, nickname), // Chave primária composta
+     * FOREIGN KEY (employee_id) REFERENCES ob_employees(id) // Define employee_id como chave estrangeira
      * );
      * ```
      */
@@ -85,9 +81,33 @@ public class Employee implements Serializable {
     private Map<String, String> phones = new HashMap<>();
 
     @Enumerated(EnumType.STRING)//Por default EnumType value is ORDINAL. (0,1,2,3..))
-    EmployeeCategory category;
+    private EmployeeCategory category;
 
-    
+    // ======================= ASSOCIAÇÃO: ONE TO ONE ===============================
+    //1. Associação com chave estrangeira: cria-se uma nova coluna na tabela
+    //@OneToOne //Um Employee para uma Direction 1...1
+    @OneToOne(cascade = CascadeType.ALL) //As operações são persistidas em suas associações
+    @JoinColumn(name = "direction_pk", foreignKey = @ForeignKey(name = "fk_employee_direction"))
+    //permite add o nome da coluna
+
+    //2. Associação com tabela
+    //@OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "ob_employee_direction", //Nome da nova tabela que irá ter as PK das entidades
+//            joinColumns = @JoinColumn(name = "employee_id"), //nome da col da entidade que mantem a relação
+//            inverseJoinColumns = @JoinColumn(name = "direction_id") // nome da col da outra entidade da
+//    )
+
+    //3. forma
+    //@OneToOne(cascade = CascadeType.ALL)
+    //@PrimaryKeyJoinColumn
+
+    //4. forma
+    // @OneToOne
+    //@MapsId
+    private Direction direction;
+
+
     // Constructors
     public Employee() {
     }
@@ -233,6 +253,14 @@ public class Employee implements Serializable {
         this.category = category;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
     @Override
     public String toString() {
         return "Employee {\n" +
@@ -245,11 +273,6 @@ public class Employee implements Serializable {
                 "  married: " + married + ",\n" +
                 "  birthDate: " + birthDate + ",\n" +
                 "  registerDate: " + registerDate + "\n" +
-                "  nickNames: " + nickNames + "\n" +
-                "  postalCode: " + postalCode + "\n" +
-                "  creditCards: " + creditCards + "\n" +
-                "  phones: " + phones + "\n" +
-                "  category: " + category + "\n" +
                 '}';
     }
 

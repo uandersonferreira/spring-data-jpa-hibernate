@@ -10,3 +10,6 @@ INSERT INTO ob_employees (age, birth_date, email, first_name, last_name, married
 INSERT INTO ob_employees (age, birth_date, email, first_name, last_name, married, register_date, salary) VALUES (35, '1988-01-19', 'bob.brown@example.com', 'Bob', 'Brown', FALSE, '2024-07-28 12:00:00', 67000.00);
 
 INSERT INTO ob_employees (age, birth_date, email, first_name, last_name, married, register_date, salary) VALUES (29, '1995-08-30', 'charlie.davis@example.com', 'Charlie', 'Davis', TRUE, '2024-07-28 12:00:00', 54000.00);
+
+
+INSERT INTO ob_directions(city, country, street) VALUE ('Madrid', 'Spain', 'Calle falsa 123');
