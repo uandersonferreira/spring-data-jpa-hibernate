@@ -139,13 +139,27 @@ E também podemos inserir novos dados apartir do Java ao utilizar os metódos da
 
 ## Associações entre Entidades
 
-* @OneToOne
+* One To One - Employee and Direction
     * @OneToOne
     * @JoinColumn
     * @JoinTable
     * @PrimaryKeyJoinColumn
     * @MapsId
+  
+* One To Many - Employee and Car
+  * unidirecional
+  * bidirecional
+  
+* Many To One - Employee and Company
+    * unidirecional
+    * bidirecional
+  
+* Many To Many - Employee and Project
+    * unidirecional
+    * bidirecional
 
+
+> Consulte os readmes do projeto paar saber mais
 
 ### 1. **@OneToOne**
 
@@ -155,7 +169,7 @@ de uma entidade está associada a uma única instância de outra entidade.
 Exemplo conceitual: Um empregado pode ter exatamente uma direção (endereço), e um endereço pertence exatamente a um
 empregado.
 
-### 2. **@JoinColumn**
+### 1.2. **@JoinColumn**
 
 Essa anotação é usada junto com `@OneToOne` para especificar a coluna de junção (chave estrangeira) na tabela da
 entidade "dona" da relação. Ela define explicitamente qual coluna na tabela do banco de dados contém a chave estrangeira
@@ -167,7 +181,7 @@ relacionamento.
 Exemplo conceitual: Se a entidade `Employee` é a dona da relação, a tabela `employee` terá uma coluna `address_id` que
 referencia a tabela `address`.
 
-### 3. **@JoinTable**
+### 1.3. **@JoinTable**
 
 `@JoinTable` é usada quando você deseja especificar uma tabela de junção explicitamente. Em vez de colocar a chave
 estrangeira diretamente em uma das tabelas envolvidas no relacionamento, uma terceira tabela (tabela de junção) é
@@ -179,7 +193,7 @@ entidades.
 Exemplo conceitual: Para o relacionamento entre `Employee` e `Address`, você teria uma tabela de junção,
 como `employee_address`, contendo as colunas `employee_id` e `address_id`.
 
-### 4. **@PrimaryKeyJoinColumn**
+### 1.4. **@PrimaryKeyJoinColumn**
 
 Essa anotação é usada em associações `@OneToOne` onde ambas as entidades compartilham a mesma chave primária. Isso
 geralmente significa que a chave primária da entidade "dona" da relação é também a chave estrangeira que referencia a
@@ -190,7 +204,7 @@ entidade associada.
 Exemplo conceitual: A entidade `Employee` e `Address` compartilham a mesma chave primária. Se o `employee_id` for 1,
 o `address_id` também será 1.
 
-### 5. **@MapsId**
+### 1.5. **@MapsId**
 
 `@MapsId` é usado para mapear a chave primária de uma entidade associada diretamente à chave primária de outra entidade,
 sem a necessidade de duplicação. Isso pode ser útil em associações `@OneToOne` onde você quer que a chave primária de
@@ -200,4 +214,42 @@ uma entidade seja usada também como a chave estrangeira para a outra entidade.
 
 Exemplo conceitual: A chave primária de `Employee` é mapeada diretamente para a chave primária de `Address`, e não há
 necessidade de uma chave estrangeira separada.
+
+
+
+### 2. **One To Many - Employee and Car**
+
+#### Unidirecional
+
+- **Conceito:** No relacionamento unidirecional `OneToMany`, a classe "dona" (que possui a coleção) conhece a classe associada, mas a classe associada não tem referência de volta para a classe "dona".
+- **Definição:** Um `Employee` pode possuir vários `Car`, mas um `Car` não tem conhecimento sobre o `Employee` ao qual pertence.
+
+#### Bidirecional
+
+- **Conceito:** No relacionamento bidirecional `OneToMany`, ambas as classes conhecem uma à outra. A classe "dona" possui uma coleção da outra classe, e a classe associada tem uma referência de volta para a classe "dona".
+- **Definição:** Um `Employee` pode possuir vários `Car` e, ao mesmo tempo, cada `Car` sabe a qual `Employee` pertence.
+
+### 3. **Many To One - Employee and Company**
+
+#### Unidirecional
+
+- **Conceito:** No relacionamento unidirecional `ManyToOne`, a classe "dona" (que possui a referência) conhece a classe associada, mas a classe associada não tem conhecimento da classe "dona".
+- **Definição:** Vários `Employee` podem estar associados a um único `Company`, mas um `Company` não tem conhecimento direto de todos os `Employee` associados a ele.
+
+#### Bidirecional
+
+- **Conceito:** No relacionamento bidirecional `ManyToOne`, tanto a classe "dona" quanto a classe associada conhecem uma à outra. A classe "dona" possui uma referência para a classe associada e, ao mesmo tempo, a classe associada mantém uma coleção ou uma lista de referências para a classe "dona".
+- **Definição:** Vários `Employee` podem estar associados a um único `Company`, e o `Company` pode manter uma lista de todos os `Employee` que pertencem a ele.
+
+### 4. **Many To Many - Employee and Project**
+
+#### Unidirecional
+
+- **Conceito:** No relacionamento unidirecional `ManyToMany`, a classe "dona" (que possui a coleção) conhece a classe associada, mas a classe associada não tem conhecimento da classe "dona".
+- **Definição:** Um `Employee` pode estar associado a vários `Project`, mas um `Project` não tem conhecimento sobre os `Employee` associados a ele.
+
+#### Bidirecional
+
+- **Conceito:** No relacionamento bidirecional `ManyToMany`, ambas as classes conhecem uma à outra. A classe "dona" possui uma coleção da classe associada, e a classe associada possui uma coleção ou lista da classe "dona".
+- **Definição:** Um `Employee` pode estar associado a vários `Project`, e um `Project` pode ter vários `Employee` associados a ele.
 
