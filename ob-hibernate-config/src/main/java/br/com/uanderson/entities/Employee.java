@@ -116,6 +116,9 @@ public class Employee implements Serializable {
     )
     private List<Car> cars = new ArrayList<>();
 
+    // ======================= ASSOCIAÇÃO: MANY TO MANY ===============================
+    @ManyToOne//Muitos employees para uma company (empresa)
+    private Company company;
 
     // Constructors
     public Employee() {
@@ -276,6 +279,14 @@ public class Employee implements Serializable {
 
     public void setCars(List<Car> cars) {
         this.cars = cars;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override

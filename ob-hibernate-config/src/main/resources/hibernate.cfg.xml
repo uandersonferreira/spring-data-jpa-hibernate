@@ -28,6 +28,7 @@
         <mapping class="br.com.uanderson.entities.Employee"/>
         <mapping class="br.com.uanderson.entities.Car"/>
         <mapping class="br.com.uanderson.entities.Direction"/>
+        <mapping class="br.com.uanderson.entities.Company"/>
 
     </session-factory>
 </hibernate-configuration>
