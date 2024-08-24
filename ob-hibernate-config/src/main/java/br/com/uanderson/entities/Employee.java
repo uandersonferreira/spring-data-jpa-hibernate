@@ -116,9 +116,18 @@ public class Employee implements Serializable {
     )
     private List<Car> cars = new ArrayList<>();
 
-    // ======================= ASSOCIAÇÃO: MANY TO MANY ===============================
+    // ======================= ASSOCIAÇÃO: MANY TO ONE ===============================
     @ManyToOne//Muitos employees para uma company (empresa)
     private Company company;
+
+    // ======================= ASSOCIAÇÃO: MANY TO MANY ===============================
+    @ManyToMany
+    @JoinTable(
+            name = "ob_employee_projects", //Nome da nova tabela que irá ter as PK das entidades
+            joinColumns = @JoinColumn(name = "employee_id"), //nome da col da entidade que mantem a relação
+            inverseJoinColumns = @JoinColumn(name = "project_id") // nome da col da outra entidade da
+    )
+    private List<Project> projects = new ArrayList<>();
 
     // Constructors
     public Employee() {
@@ -287,6 +296,14 @@ public class Employee implements Serializable {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     @Override
