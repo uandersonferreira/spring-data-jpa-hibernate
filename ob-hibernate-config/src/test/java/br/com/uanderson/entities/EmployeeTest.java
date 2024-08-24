@@ -121,6 +121,9 @@ class EmployeeTest {
         employee.setDirection(direction);
 
         EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+        DirectionDAOImpl directionDAO = new DirectionDAOImpl();
+
+        directionDAO.create(direction);
         employeeDAO.create(employee);
 
 

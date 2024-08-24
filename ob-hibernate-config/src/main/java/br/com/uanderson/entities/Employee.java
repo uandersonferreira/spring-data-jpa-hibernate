@@ -85,8 +85,8 @@ public class Employee implements Serializable {
 
     // ======================= ASSOCIAÇÃO: ONE TO ONE ===============================
     //1. Associação com chave estrangeira: cria-se uma nova coluna na tabela
-    //@OneToOne //Um Employee para uma Direction 1...1
-    @OneToOne(cascade = CascadeType.ALL) //As operações são persistidas em suas associações
+    @OneToOne //Um Employee para uma Direction 1...1
+    //@OneToOne(cascade = CascadeType.ALL) //As operações são persistidas em suas associações
     @JoinColumn(name = "direction_pk", foreignKey = @ForeignKey(name = "fk_employee_direction"))
     //permite add o nome da coluna
 
@@ -99,7 +99,7 @@ public class Employee implements Serializable {
 //    )
 
     //3. forma
-    //@OneToOne(cascade = CascadeType.ALL)
+    //@OneToOne
     //@PrimaryKeyJoinColumn
 
     //4. forma
