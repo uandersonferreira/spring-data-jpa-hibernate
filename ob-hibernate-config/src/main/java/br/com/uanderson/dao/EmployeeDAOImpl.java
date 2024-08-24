@@ -9,8 +9,6 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.hibernate.query.criteria.HibernateCriteriaBuilder;
-import org.hibernate.query.criteria.JpaCriteriaQuery;
 
 import java.util.List;
 
@@ -58,6 +56,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         session.close();
 
+        return employee;
+    }
+
+    @Override
+    public Employee findByIdEager(Long id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        //Consulta HQL (usa o código java na consulta)
+        Query<Employee> query = session.createQuery(
+                "select distinct e from Employee e join fetch e.cars where e.id = :pk",
+                Employee.class
+        );
+
+        query.setParameter("pk", id);//nome não importa, desde que seja o mesmo. mas boas pratica de nome deve ser usadas
+
+        Employee employee = query.getSingleResult();
+
+        session.close();
         return employee;
     }
 

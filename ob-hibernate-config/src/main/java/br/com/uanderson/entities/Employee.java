@@ -107,6 +107,15 @@ public class Employee implements Serializable {
     //@MapsId
     private Direction direction;
 
+    // ======================= ASSOCIAÇÃO: ONE TO MANY ===============================
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "ob_employee_cars", //Nome da nova tabela que irá ter as PK das entidades
+            joinColumns = @JoinColumn(name = "employee_id"), //nome da col da entidade que mantem a relação
+            inverseJoinColumns = @JoinColumn(name = "car_id") // nome da col da outra entidade da
+    )
+    private List<Car> cars = new ArrayList<>();
+
 
     // Constructors
     public Employee() {
@@ -259,6 +268,14 @@ public class Employee implements Serializable {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
     }
 
     @Override

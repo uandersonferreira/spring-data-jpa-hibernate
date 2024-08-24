@@ -33,6 +33,13 @@ public interface EmployeeDAO {
     Employee findById(Long id);
 
     /**
+     * Busca um empregado pelo seu Id é seus objetos de suas relações many
+     * Utiliza métodos da implementação Hibernate
+     * @return um Employee se exits or null se não encontrar ninguém
+     */
+    Employee findByIdEager(Long id);
+
+    /**
      * Busca um empregado pelo seu Id
      * Utiliza JPA Criteria API
      * @return um Employee se exits or null se não encontrar ninguém
