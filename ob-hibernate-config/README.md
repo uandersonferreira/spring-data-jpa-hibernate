@@ -111,14 +111,16 @@ Navegador --> Controller --> Service --> DAO ou Repository --> Base de dados (My
 
 Hibernate ejecuta pro default o arquivo `import.sql` se o mesmo existir.
 
-Com a propriedade `hibernate.hbm2ddl.import_files` podemos indicar ao Hibernate que ejecute mais de um 
-arquivo SQL. 
-ex: 
+Com a propriedade `hibernate.hbm2ddl.import_files` podemos indicar ao Hibernate que ejecute mais de um
+arquivo SQL.
+ex:
+
 ```
  <property name="hibernate.hbm2ddl.import_files">import.sql, data.sql</property> 
 ```
 
 E também podemos inserir novos dados apartir do Java ao utilizar os metódos da interface `Session`.
+
 ```
  SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
@@ -137,9 +139,65 @@ E também podemos inserir novos dados apartir do Java ao utilizar os metódos da
 
 ## Associações entre Entidades
 
-* @OneToOne 
-  * @OneToOne
-  * @JoinColumn
-  * @JoinTable
-  * @PrimaryKeyJoinColumn
-  * @MapsId
+* @OneToOne
+    * @OneToOne
+    * @JoinColumn
+    * @JoinTable
+    * @PrimaryKeyJoinColumn
+    * @MapsId
+
+
+### 1. **@OneToOne**
+
+Essa anotação define uma associação de um-para-um entre duas entidades. Em um relacionamento `@OneToOne`, uma instância
+de uma entidade está associada a uma única instância de outra entidade.
+
+Exemplo conceitual: Um empregado pode ter exatamente uma direção (endereço), e um endereço pertence exatamente a um
+empregado.
+
+### 2. **@JoinColumn**
+
+Essa anotação é usada junto com `@OneToOne` para especificar a coluna de junção (chave estrangeira) na tabela da
+entidade "dona" da relação. Ela define explicitamente qual coluna na tabela do banco de dados contém a chave estrangeira
+que referencia a outra entidade.
+
+**Conceito:** A coluna da chave estrangeira que relaciona uma entidade com outra fica na tabela da entidade "dona" do
+relacionamento.
+
+Exemplo conceitual: Se a entidade `Employee` é a dona da relação, a tabela `employee` terá uma coluna `address_id` que
+referencia a tabela `address`.
+
+### 3. **@JoinTable**
+
+`@JoinTable` é usada quando você deseja especificar uma tabela de junção explicitamente. Em vez de colocar a chave
+estrangeira diretamente em uma das tabelas envolvidas no relacionamento, uma terceira tabela (tabela de junção) é
+criada. Esta tabela contém as chaves estrangeiras de ambas as entidades.
+
+**Conceito:** Uma tabela intermediária (tabela de junção) é usada para armazenar as chaves estrangeiras das duas
+entidades.
+
+Exemplo conceitual: Para o relacionamento entre `Employee` e `Address`, você teria uma tabela de junção,
+como `employee_address`, contendo as colunas `employee_id` e `address_id`.
+
+### 4. **@PrimaryKeyJoinColumn**
+
+Essa anotação é usada em associações `@OneToOne` onde ambas as entidades compartilham a mesma chave primária. Isso
+geralmente significa que a chave primária da entidade "dona" da relação é também a chave estrangeira que referencia a
+entidade associada.
+
+**Conceito:** A chave primária da entidade dona é usada como a chave estrangeira para referenciar a entidade associada.
+
+Exemplo conceitual: A entidade `Employee` e `Address` compartilham a mesma chave primária. Se o `employee_id` for 1,
+o `address_id` também será 1.
+
+### 5. **@MapsId**
+
+`@MapsId` é usado para mapear a chave primária de uma entidade associada diretamente à chave primária de outra entidade,
+sem a necessidade de duplicação. Isso pode ser útil em associações `@OneToOne` onde você quer que a chave primária de
+uma entidade seja usada também como a chave estrangeira para a outra entidade.
+
+**Conceito:** A chave primária de uma entidade é reutilizada como a chave estrangeira para a entidade relacionada.
+
+Exemplo conceitual: A chave primária de `Employee` é mapeada diretamente para a chave primária de `Address`, e não há
+necessidade de uma chave estrangeira separada.
+
