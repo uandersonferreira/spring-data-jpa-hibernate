@@ -1,21 +1,22 @@
-package br.com.uanderson.dao;
+package br.com.uanderson.dao.impl;
 
-import br.com.uanderson.entities.Company;
+import br.com.uanderson.dao.DirectionDAO;
+import br.com.uanderson.entities.Direction;
 import br.com.uanderson.util.HibernateUtil;
-import jakarta.persistence.PersistenceException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-public class CompanyDAOImpl implements CompanyDAO {
+public class DirectionDAOImpl implements DirectionDAO {
     @Override
-    public List<Company> findAll() {
+    public List<Direction> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         //Consulta HQL
-        Query<Company> query = session.createQuery("from Company", Company.class);
-        List<Company> directions = query.list();
+        Query<Direction> query = session.createQuery("from Direction", Direction.class);
+        List<Direction> directions = query.list();
 
         session.close();
 
@@ -23,14 +24,14 @@ public class CompanyDAOImpl implements CompanyDAO {
     }
 
     @Override
-    public Company findById(Long id) {
+    public Direction findById(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
-        Company company = session.find(Company.class, id);
+        Direction direction = session.find(Direction.class, id);
 
         session.close();
 
-        return company;
+        return direction;
     }
 
 
@@ -42,13 +43,13 @@ public class CompanyDAOImpl implements CompanyDAO {
      */
 
     @Override
-    public Company create(Company company) {
+    public Direction create(Direction direction) {
         //Poderia usar o try-with-resources para lidar com o fechamento da session também
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
 
-            session.persist(company);
+            session.persist(direction);
 
             session.getTransaction().commit();
 
@@ -60,17 +61,17 @@ public class CompanyDAOImpl implements CompanyDAO {
             session.close();
         }
 
-        return company;
+        return direction;
     }
 
     @Override
-    public Company update(Company company) {
+    public Direction update(Direction direction) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
 
-            //session.update(company) - @Deprecated(since = "6.0")
-            session.merge(company);//Usar merge() no lugar de update(). (ATUALIZA E INSERE REGISTROS)
+            //session.update(direction) - @Deprecated(since = "6.0")
+            session.merge(direction);//Usar merge() no lugar de update(). (ATUALIZA E INSERE REGISTROS)
 
             session.getTransaction().commit();
 
@@ -81,7 +82,7 @@ public class CompanyDAOImpl implements CompanyDAO {
             session.close();
         }
 
-        return company;
+        return direction;
     }
 
     @Override
@@ -90,9 +91,9 @@ public class CompanyDAOImpl implements CompanyDAO {
         try {
             session.beginTransaction();
 
-            Company company = findById(id);
+            Direction direction = findById(id);
 
-            session.remove(company);
+            session.remove(direction);
 
             session.getTransaction().commit();
 

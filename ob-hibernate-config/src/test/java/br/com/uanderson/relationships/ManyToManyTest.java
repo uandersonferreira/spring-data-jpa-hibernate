@@ -1,9 +1,7 @@
 package br.com.uanderson.relationships;
 
-import br.com.uanderson.dao.CompanyDAOImpl;
-import br.com.uanderson.dao.EmployeeDAOImpl;
-import br.com.uanderson.dao.ProjectDAOImpl;
-import br.com.uanderson.entities.Company;
+import br.com.uanderson.dao.impl.EmployeeDAOImpl;
+import br.com.uanderson.dao.impl.ProjectDAOImpl;
 import br.com.uanderson.entities.Employee;
 import br.com.uanderson.entities.Project;
 import org.junit.jupiter.api.DisplayName;

@@ -1,6 +1,7 @@
-package br.com.uanderson.dao;
+package br.com.uanderson.dao.impl;
 
-import br.com.uanderson.entities.Project;
+import br.com.uanderson.dao.CompanyDAO;
+import br.com.uanderson.entities.Company;
 import br.com.uanderson.util.HibernateUtil;
 import jakarta.persistence.PersistenceException;
 import org.hibernate.Session;
@@ -8,14 +9,14 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class ProjectDAOImpl implements ProjectDAO {
+public class CompanyDAOImpl implements CompanyDAO {
     @Override
-    public List<Project> findAll() {
+    public List<Company> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         //Consulta HQL
-        Query<Project> query = session.createQuery("from Project", Project.class);
-        List<Project> directions = query.list();
+        Query<Company> query = session.createQuery("from Company", Company.class);
+        List<Company> directions = query.list();
 
         session.close();
 
@@ -23,14 +24,14 @@ public class ProjectDAOImpl implements ProjectDAO {
     }
 
     @Override
-    public Project findById(Long id) {
+    public Company findById(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
-        Project project = session.find(Project.class, id);
+        Company company = session.find(Company.class, id);
 
         session.close();
 
-        return project;
+        return company;
     }
 
 
@@ -42,13 +43,13 @@ public class ProjectDAOImpl implements ProjectDAO {
      */
 
     @Override
-    public Project create(Project project) {
+    public Company create(Company company) {
         //Poderia usar o try-with-resources para lidar com o fechamento da session também
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
 
-            session.persist(project);
+            session.persist(company);
 
             session.getTransaction().commit();
 
@@ -60,17 +61,17 @@ public class ProjectDAOImpl implements ProjectDAO {
             session.close();
         }
 
-        return project;
+        return company;
     }
 
     @Override
-    public Project update(Project project) {
+    public Company update(Company company) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
 
-            //session.update(project) - @Deprecated(since = "6.0")
-            session.merge(project);//Usar merge() no lugar de update(). (ATUALIZA E INSERE REGISTROS)
+            //session.update(company) - @Deprecated(since = "6.0")
+            session.merge(company);//Usar merge() no lugar de update(). (ATUALIZA E INSERE REGISTROS)
 
             session.getTransaction().commit();
 
@@ -81,7 +82,7 @@ public class ProjectDAOImpl implements ProjectDAO {
             session.close();
         }
 
-        return project;
+        return company;
     }
 
     @Override
@@ -90,9 +91,9 @@ public class ProjectDAOImpl implements ProjectDAO {
         try {
             session.beginTransaction();
 
-            Project project = findById(id);
+            Company company = findById(id);
 
-            session.remove(project);
+            session.remove(company);
 
             session.getTransaction().commit();
 

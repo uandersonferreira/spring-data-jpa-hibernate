@@ -1,11 +1,11 @@
 package br.com.uanderson.dao;
 
+import br.com.uanderson.dao.impl.EmployeeDAOImpl;
 import br.com.uanderson.entities.Employee;
+import br.com.uanderson.entities.EmployeeCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,4 +50,12 @@ class EmployeeCriteriaTest {
         List<Employee> employees = dao.findByAgeBetweenCriteria(19, 30);
         System.out.println(employees);
     }
+
+    @Test
+    void findByAgeBetweenAndCategoryCriteria() {
+        List<Employee> employees = dao.findByAgeBetweenAndCategoryCriteria(19, 50, EmployeeCategory.JUNIOR);
+        System.out.println(employees);
+    }
+
+
 }//class

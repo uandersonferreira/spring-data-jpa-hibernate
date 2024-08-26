@@ -1,11 +1,9 @@
 package br.com.uanderson.entities;
 
-import br.com.uanderson.dao.DirectionDAOImpl;
-import br.com.uanderson.dao.EmployeeDAOImpl;
+import br.com.uanderson.dao.impl.EmployeeDAOImpl;
 import br.com.uanderson.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

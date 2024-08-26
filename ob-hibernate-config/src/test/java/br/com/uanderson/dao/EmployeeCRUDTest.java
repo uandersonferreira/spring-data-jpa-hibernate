@@ -1,5 +1,6 @@
 package br.com.uanderson.dao;
 
+import br.com.uanderson.dao.impl.EmployeeDAOImpl;
 import br.com.uanderson.entities.Employee;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

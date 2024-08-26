@@ -1,6 +1,8 @@
 package br.com.uanderson.dao;
 
+import br.com.uanderson.dto.EmployeeDTO;
 import br.com.uanderson.entities.Employee;
+import br.com.uanderson.entities.EmployeeCategory;
 
 import java.util.List;
 
@@ -47,12 +49,24 @@ public interface EmployeeDAO {
     Employee findByIdCriteria(Long id);
 
     /**
+     * Busca um empregado pelo seu Id
+     * Utiliza métodos da implementação Nativa
+     * @return um Employee se exits or null se não encontrar ninguém
+     */
+    EmployeeDTO findByIdNative(Long id);
+
+
+    /**
      * Busca todos os empregados pela sua idade
      *
      * @param age
      * @return uma lista de Employee
      */
     List<Employee> findByAge(Integer age);
+
+    Double findAvgByAgeCriteria();
+
+    List<Employee> findEmployeesWithAboveAverageSalary();
 
     /**
      * Filtra pelo sobrenome
@@ -75,6 +89,15 @@ public interface EmployeeDAO {
      * @return lista de empregados
      */
     List<Employee> findByAgeBetweenCriteria(Integer min, Integer max);
+
+    /**
+     * Filtra por um intervalo de idades entre dois números e por uma Categoria especifica
+     * @param ageMin
+     * @param ageMax
+     * @param category
+     * @return Uma lista de empregados
+     */
+    List<Employee> findByAgeBetweenAndCategoryCriteria(Integer ageMin, Integer ageMax, EmployeeCategory category);
 
 
     /**

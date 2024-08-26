@@ -1,21 +1,22 @@
-package br.com.uanderson.dao;
+package br.com.uanderson.dao.impl;
 
-import br.com.uanderson.entities.Direction;
+import br.com.uanderson.dao.ProjectDAO;
+import br.com.uanderson.entities.Project;
 import br.com.uanderson.util.HibernateUtil;
+import jakarta.persistence.PersistenceException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import jakarta.persistence.*;
 
 import java.util.List;
 
-public class DirectionDAOImpl implements DirectionDAO {
+public class ProjectDAOImpl implements ProjectDAO {
     @Override
-    public List<Direction> findAll() {
+    public List<Project> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         //Consulta HQL
-        Query<Direction> query = session.createQuery("from Direction", Direction.class);
-        List<Direction> directions = query.list();
+        Query<Project> query = session.createQuery("from Project", Project.class);
+        List<Project> directions = query.list();
 
         session.close();
 
@@ -23,14 +24,14 @@ public class DirectionDAOImpl implements DirectionDAO {
     }
 
     @Override
-    public Direction findById(Long id) {
+    public Project findById(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
-        Direction direction = session.find(Direction.class, id);
+        Project project = session.find(Project.class, id);
 
         session.close();
 
-        return direction;
+        return project;
     }
 
 
@@ -42,13 +43,13 @@ public class DirectionDAOImpl implements DirectionDAO {
      */
 
     @Override
-    public Direction create(Direction direction) {
+    public Project create(Project project) {
         //Poderia usar o try-with-resources para lidar com o fechamento da session também
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
 
-            session.persist(direction);
+            session.persist(project);
 
             session.getTransaction().commit();
 
@@ -60,17 +61,17 @@ public class DirectionDAOImpl implements DirectionDAO {
             session.close();
         }
 
-        return direction;
+        return project;
     }
 
     @Override
-    public Direction update(Direction direction) {
+    public Project update(Project project) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
 
-            //session.update(direction) - @Deprecated(since = "6.0")
-            session.merge(direction);//Usar merge() no lugar de update(). (ATUALIZA E INSERE REGISTROS)
+            //session.update(project) - @Deprecated(since = "6.0")
+            session.merge(project);//Usar merge() no lugar de update(). (ATUALIZA E INSERE REGISTROS)
 
             session.getTransaction().commit();
 
@@ -81,7 +82,7 @@ public class DirectionDAOImpl implements DirectionDAO {
             session.close();
         }
 
-        return direction;
+        return project;
     }
 
     @Override
@@ -90,9 +91,9 @@ public class DirectionDAOImpl implements DirectionDAO {
         try {
             session.beginTransaction();
 
-            Direction direction = findById(id);
+            Project project = findById(id);
 
-            session.remove(direction);
+            session.remove(project);
 
             session.getTransaction().commit();
 

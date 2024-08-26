@@ -11,15 +11,26 @@ Aqui está uma visão geral do Criteria API e seus principais métodos:
 
 1. **`CriteriaBuilder`**: É a fábrica para instâncias de `CriteriaQuery`, `Predicate`, `Order`, e outros tipos de consulta. Você obtém uma instância de `CriteriaBuilder` a partir da `Session` ou `EntityManager`.
 
-2. **`CriteriaQuery<T>`**: Representa uma consulta específica. Você cria uma instância de `CriteriaQuery` usando o `CriteriaBuilder`.
+2. **`CriteriaQuery<T>`**: Representa a consulta SQL em si. Você cria uma instância de `CriteriaQuery` usando o `CriteriaBuilder`. 
+Ele armazena o que você quer selecionar, de qual entidade, com quais condições e ordenações.
+ > Equivalente SQL: A consulta completa (SELECT ... FROM ... WHERE ... ORDER BY ...).
 
-3. **`Root<T>`**: Representa uma entidade raiz na consulta. É semelhante à cláusula `FROM` em uma consulta SQL.
+3. **`Root<T>`**: O Root<T> especifica a entidade principal que será usada na consulta, ou seja, o "root" da consulta. É semelhante à cláusula FROM em SQL, onde você define de qual tabela (entidade) os dados serão extraídos
 
-4. **`Predicate`**: Representa uma condição na consulta. É semelhante às cláusulas `WHERE` em SQL.
+> Equivalente SQL: Cláusula FROM.
 
-5. **`Path<X>`**: Representa um caminho na entidade (por exemplo, um atributo de uma entidade).
+
+4. **`Predicate`**: Representa uma condição na consulta. É semelhante às cláusulas `WHERE` em SQL que filtram os resultados.
+> Por exemplo, cb.equal(root.get("nome"), "Uanderson") cria um Predicate que diz: "somente traga resultados onde o nome seja 'Uanderson'".
+
+5. **`Path<X>`**: O Path<X> permite navegar dentro de uma entidade e acessar seus atributos. É semelhante a acessar colunas específicas em SQL. Quando você faz root.get("nome"), está acessando o campo nome da entidade, como faria com uma coluna em SQL.
+
+> Equivalente SQL: Acesso aos atributos/colunas (e.g., SELECT **nome** FROM Tabela).
 
 6. **`Order`**: Representa a ordenação dos resultados da consulta.
+> Equivalente SQL: Cláusula ORDER BY.
+
+7. **`Expression<T>`**: Representa uma expressão que pode ser usada em operações, como somas, médias, máximos, mínimos, contagens e outras funções matemáticas ou lógicas. No SQL, isso equivale a usar funções como AVG(), SUM(), COUNT(), MIN(), MAX(), ou até mesmo expressões mais complexas como age * 2.
 
 ### Exemplo de Uso do Criteria API
 
