@@ -37,9 +37,8 @@ class EmployeeCRUDTest {
 
     @Test
     void findByAge() {
-        List<Employee> employees35 = dao.findByAge(35);
-        List<Employee> employees45 = dao.findByAge(45);
-        List<Employee> employees50 = dao.findByAge(50);
+        List<Employee> employees = dao.findByAge(42);
+        System.out.println(employees);
     }
 
     @Test
@@ -68,4 +67,11 @@ class EmployeeCRUDTest {
         boolean isDelete = dao.deleteById(1L);
         System.out.println("isDelete: " + isDelete);
     }
+
+    @Test
+    void countEmployees(){
+        Long totalEmployees = dao.count();
+        System.out.println("Employees count: " + totalEmployees);
+    }
+
 }

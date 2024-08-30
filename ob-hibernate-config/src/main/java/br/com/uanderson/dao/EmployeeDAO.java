@@ -1,6 +1,7 @@
 package br.com.uanderson.dao;
 
 import br.com.uanderson.dto.EmployeeDTO;
+import br.com.uanderson.dto.EmployeeProjectionDTO;
 import br.com.uanderson.entities.Employee;
 import br.com.uanderson.entities.EmployeeCategory;
 
@@ -26,6 +27,21 @@ public interface EmployeeDAO {
      */
     List<Employee> findAllWithCriteria();
 
+    List<Employee> findAllNative();
+    List<Employee> findMostPaid();
+
+    /**
+     * Recupera employees como objetos EmployeeProjectionDTO que são projeções, ou seja, contêm apenas alguns campos, não todos.
+     * @return
+     */
+    List<EmployeeProjectionDTO> findAllProjectionNative();
+    List<EmployeeProjectionDTO> findAllProjectionEmployeeNative();
+
+    /**
+     * Devolve o numéro de employees na base de dados
+     * @return Long
+     */
+    Long count();//Útil para sustituir o findAll, que depois pegariamos o size da lista, pois essa operação é custosa.
 
     /**
      * Busca um empregado pelo seu Id

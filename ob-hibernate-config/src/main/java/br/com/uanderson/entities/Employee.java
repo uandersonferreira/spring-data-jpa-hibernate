@@ -12,6 +12,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "ob_employees") //Optional
+@NamedQuery(name = "Employee.mostPaid", query = "from Employee e where e.salary > 50000")
 public class Employee implements Serializable {
 
     //Attributes (cada atributo representa uma coluna na tabela do banco de dados)
@@ -19,7 +20,7 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name", length = 30, nullable = false)
-//Por default usa o nome do atributo com camelCase e não em snake_case
+    //Por default usa o nome do atributo com camelCase e não em snake_case
     private String firstName;
     @Column(name = "last_name")
     private String lastName;

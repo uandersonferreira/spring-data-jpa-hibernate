@@ -2,6 +2,7 @@ package br.com.uanderson.dao.impl;
 
 import br.com.uanderson.dao.EmployeeDAO;
 import br.com.uanderson.dto.EmployeeDTO;
+import br.com.uanderson.dto.EmployeeProjectionDTO;
 import br.com.uanderson.entities.Employee;
 import br.com.uanderson.entities.EmployeeCategory;
 import br.com.uanderson.util.HibernateUtil;
@@ -12,6 +13,7 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
@@ -49,6 +51,90 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         session.close();
         return employees;
     }
+
+    @Override
+    public List<Employee> findAllNative() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        NativeQuery<Employee> nativeQuery = session.createNativeQuery("SELECT * FROM ob_employees", Employee.class);
+
+        List<Employee> employees = nativeQuery.list();
+
+        session.close();
+
+        return employees;
+    }
+
+    @Override
+    public List<Employee> findMostPaid() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        Query<Employee> namedQuery = session.createNamedQuery("Employee.mostPaid", Employee.class);
+
+        List<Employee> employees = namedQuery.getResultList();
+
+        session.close();
+
+        return employees;
+        /*
+
+         */
+    }
+
+    @Override
+    public List<EmployeeProjectionDTO> findAllProjectionNative() { //Ex. com um objeto DTO personalizado com as projections
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        NativeQuery nativeQuery = session.createNativeQuery("SELECT id, email, age from ob_employees", EmployeeProjectionDTO.class);
+
+        List<EmployeeProjectionDTO> employees = nativeQuery.list();
+
+        session.close();
+
+        return employees;
+    }
+
+    @Override
+    public List<EmployeeProjectionDTO> findAllProjectionEmployeeNative() { //Ex. sem a criação de um DTO personalizado
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        NativeQuery nativeQuery = session.createNativeQuery("SELECT id, email, age from ob_employees");
+
+        List<Object[]> employees = nativeQuery.list();
+        List<EmployeeProjectionDTO> employeeDtos = new ArrayList<>();
+
+        for (Object[] employee : employees) {
+            Long id = (Long) employee[0];
+            String email = (String) employee[1];
+            Integer age = (Integer) employee[2];
+
+            employeeDtos.add(new EmployeeProjectionDTO(id, email, age));
+        }
+
+        session.close();
+
+        return employeeDtos;
+    }
+
+    @Override
+    public Long count() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        Query query = session.createQuery("select count(e) from Employee e");
+
+        Long count = (Long) query.getSingleResult();
+
+        session.close();
+
+        return count;
+        /*
+            Criar um method count, que retorne a quantidade de employees no banco de dados é
+            útil para substituir a operação de findAll que fariamos, para recuperar todos os registros
+            e depois retornar o tamanho da lista.
+            - Outro caso de uso, contabilizar employees ativos ou inativos, de lincença ...
+         */
+    }
+
 
     @Override
     public Employee findById(Long id) {
@@ -128,17 +214,28 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> findByAge(Integer age) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
-        //Consulta HQL
+        //Consulta HQL, com Named Parameter
         Query<Employee> query = session.createQuery("from Employee  where age =: age", Employee.class);// =: age (também pode ser escrito como param1)
-        //Query<Employee> query = session.createQuery("from Employee  where age = :param1", Employee.class);//podemos fazer mais filtros caso queiramos 'and ...'
-
         query.setParameter("age", age);
 
-        List<Employee> employees = query.list();
+        //Consulta HQL, com Position Parameter
+        Query<Employee> query2 = session.createQuery("from Employee  where age = ?1", Employee.class);
+        //Query<Employee> query2 = session.createQuery("from Employee  where age = ?1 and salary <= ?2", Employee.class);
+        query2.setParameter(1, age);
+        //query2.setParameter(2, 60000); //caso tenha mais de um filtro na consulta
+
+        List<Employee> employees = query2.list();
 
         session.close();
 
         return employees;
+                /*
+                    Resumo: podemos criar consultas sql usando Named Parameter (usando o nome dos atributos da class/tabela)
+                    ou Position Parameter (informando com um número a posição de cada parametro na consulta).
+
+                    - Particulamente, pelo o nome é mais fácil de identificar :)
+                    ex: ... variavel_da_tabela =: nome_do_parametro and ...
+                 */
     }
 
     /**
