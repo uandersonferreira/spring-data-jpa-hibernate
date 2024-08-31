@@ -33,7 +33,8 @@ public class Employee implements Serializable {
     private LocalDate birthDate;
     @Column(name = "register_date")
     private LocalDateTime registerDate;
-
+    @Column(name = "edit_date")
+    private LocalDateTime editDate;
     /**
      * Indica que `nicknames` é uma coleção de elementos básicos. A anotação @ElementCollection
      * é usada para mapear coleções de tipos básicos ou embutidos.
@@ -109,7 +110,7 @@ public class Employee implements Serializable {
     private Direction direction;
 
     // ======================= ASSOCIAÇÃO: ONE TO MANY ===============================
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinTable(
             name = "ob_employee_cars", //Nome da nova tabela que irá ter as PK das entidades
             joinColumns = @JoinColumn(name = "employee_id"), //nome da col da entidade que mantem a relação
@@ -131,8 +132,7 @@ public class Employee implements Serializable {
     private List<Project> projects = new ArrayList<>();
 
     // Constructors
-    public Employee() {
-    }
+    public Employee() {}
 
     public Employee(String firstName, String lastName, String email, Integer age, Double salary,
                     Boolean married, LocalDate birthDate, LocalDateTime registerDate) {
@@ -307,6 +307,14 @@ public class Employee implements Serializable {
         this.projects = projects;
     }
 
+    public LocalDateTime getEditDate() {
+        return editDate;
+    }
+
+    public void setEditDate(LocalDateTime editDate) {
+        this.editDate = editDate;
+    }
+
     @Override
     public String toString() {
         return "Employee {\n" +
@@ -321,5 +329,42 @@ public class Employee implements Serializable {
                 "  registerDate: " + registerDate + "\n" +
                 '}';
     }
+
+
+    // ======================= EVENTS (Livecycle Callback) ==================
+
+    /**
+     *  Method é executado antes de ser inserir/criar uma entidade Employee na base de dados.
+     *  Portanto é ANTES de ser criar o registro na base de dados. É executado apenas 1 vez, que é
+     *  quando se cria o registro.
+     *
+     */
+    @PrePersist
+    public void prePersist() {
+        System.out.println("prePersist");
+        this.setRegisterDate(LocalDateTime.now());
+        this.setEditDate(LocalDateTime.now());
+    }
+
+    /**
+     *  Method é executado antes de ser atualizar uma entidade Employee na base de dados.
+     *  Portanto é ANTES de ATUALIZAR o registro na base de dados. E é executado todas as vezes
+     *  que ocorre modificações de fato dos dados, pois o @PreUpdate é chamado somente se os dados
+     *  forem realmente alterados.
+     *
+     */
+    @PreUpdate
+    public void preUpdate(){
+        System.out.println("preUpdate");
+        this.setEditDate(LocalDateTime.now());
+    }
+
+    @PreRemove
+    public void preRemove(){
+        System.out.println("preRemove");
+    }
+
+
+
 
 }//class

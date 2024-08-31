@@ -1,5 +1,8 @@
 package br.com.uanderson.relationships;
 
+import br.com.uanderson.dao.CarDAO;
+import br.com.uanderson.dao.EmployeeDAO;
+import br.com.uanderson.dao.impl.CarDAOImpl;
 import br.com.uanderson.dao.impl.EmployeeDAOImpl;
 import br.com.uanderson.entities.Car;
 import br.com.uanderson.entities.Employee;
@@ -35,7 +38,12 @@ public class OneToManyTest {
         employee.getCars().add(car2);
         employee.getCars().add(car3);
 
-        EmployeeDAOImpl employeeDAO = new EmployeeDAOImpl();
+        EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+        CarDAO carDAO = new CarDAOImpl();
+
+        carDAO.create(car1);
+        carDAO.create(car2);
+        carDAO.create(car3);
 
         employeeDAO.create(employee);
 
@@ -49,7 +57,7 @@ public class OneToManyTest {
 
         //Solução para evitar LazyInitializationException creamos uma query que carrega os dados que queremos
         //Inner join por debaixo dos panos
-        Employee employeeDB = employeeDAO.findByIdEager(6L);
+        Employee employeeDB = employeeDAO.findByIdEager(4L);
         System.out.println("Employee DB: "+employeeDB);
         List<Car> cars = employeeDB.getCars();
         System.out.println(cars);

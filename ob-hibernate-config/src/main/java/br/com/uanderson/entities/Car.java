@@ -15,6 +15,9 @@ public class Car implements Serializable {
     @Column(name = "release_year")
     private Integer releaseYear;
 
+    @ManyToOne
+    private Employee employee;
+
     public Car(Long id, String manufacturer, Double cc, Integer releaseYear) {
         this.id = id;
         this.manufacturer = manufacturer;
@@ -55,6 +58,15 @@ public class Car implements Serializable {
     public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
     }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
 
     @Override
     public String toString() {
