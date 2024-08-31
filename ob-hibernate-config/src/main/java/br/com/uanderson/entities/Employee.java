@@ -359,6 +359,9 @@ public class Employee implements Serializable {
         this.setEditDate(LocalDateTime.now());
     }
 
+    /**
+     * Esse método é executado antes de uma entidade ser removida da base de dados
+     */
     @PreRemove
     public void preRemove(){
         System.out.println("preRemove");

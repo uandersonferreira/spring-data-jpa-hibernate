@@ -26,7 +26,7 @@ class EmployeeEventsTest {
     void prePersist() {
 
         Employee employee = new Employee(
-                "Employee4",
+                null,
                 "Doe",
                 "employee4@example.com",
                 30,
