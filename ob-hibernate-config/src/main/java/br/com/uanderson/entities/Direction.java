@@ -4,11 +4,15 @@ package br.com.uanderson.entities;
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ob_directions")
+@Audited
 public class Direction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +21,9 @@ public class Direction implements Serializable {
     private String street;
     private String city;
     private String country;
+    @Column(name = "create_on")
+    @CreationTimestamp
+    private LocalDateTime createOn;
 
     public Direction() {
     }
@@ -58,6 +65,14 @@ public class Direction implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public LocalDateTime getCreateOn() {
+        return createOn;
+    }
+
+    public void setCreateOn(LocalDateTime createOn) {
+        this.createOn = createOn;
     }
 
     @Override

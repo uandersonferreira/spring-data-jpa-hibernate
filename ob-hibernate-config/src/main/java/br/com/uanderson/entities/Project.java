@@ -1,14 +1,18 @@
 package br.com.uanderson.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "ob_projects")
+@Audited
 public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +20,9 @@ public class Project implements Serializable {
 
     private String title;
     private LocalDate startDate;
+    @Column(name = "create_on")
+    @CreationTimestamp
+    private LocalDateTime createOn;
 
     //@ManyToMany //unidirecional
     @ManyToMany(mappedBy = "projects") //Bidirecional
@@ -51,6 +58,22 @@ public class Project implements Serializable {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public LocalDateTime getCreateOn() {
+        return createOn;
+    }
+
+    public void setCreateOn(LocalDateTime createOn) {
+        this.createOn = createOn;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     @Override

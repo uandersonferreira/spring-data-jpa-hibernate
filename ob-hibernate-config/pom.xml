@@ -40,6 +40,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Para auditoria dos dados -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>6.6.0.Final</version>
+        </dependency>
+
 
     </dependencies>
 

@@ -1,13 +1,17 @@
 package br.com.uanderson.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "ob_companies")
+@Audited
 public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +21,9 @@ public class Company implements Serializable {
     private String legalName;
     private Double capital;
     private Integer year;
-
+    @Column(name = "create_on")
+    @CreationTimestamp
+    private LocalDateTime createOn;
     // ======================= ASSOCIAÇÃO: ONE TO MANY BIDIRECIONAL ===============================
     //@OneToMany // unidirecional + new tabela de junção.
     @OneToMany(mappedBy = "company")// bidirecional(ambos se conhecem) + new coluna com FK(Company) do Lado many que é dono da associação
@@ -78,6 +84,14 @@ public class Company implements Serializable {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public LocalDateTime getCreateOn() {
+        return createOn;
+    }
+
+    public void setCreateOn(LocalDateTime createOn) {
+        this.createOn = createOn;
     }
 
     @Override

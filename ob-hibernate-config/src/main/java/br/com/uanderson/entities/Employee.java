@@ -1,6 +1,9 @@
 package br.com.uanderson.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,6 +16,8 @@ import java.util.*;
 @Entity
 @Table(name = "ob_employees") //Optional
 @NamedQuery(name = "Employee.mostPaid", query = "from Employee e where e.salary > 50000")
+//@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED) //Não audita as relações, e se aplica somente a essa entidade
+//@Audited //Auditar as relações, mas elas têm quer ter a anotação também, caso contrário irá dar error.
 public class Employee implements Serializable {
 
     //Attributes (cada atributo representa uma coluna na tabela do banco de dados)
@@ -27,6 +32,8 @@ public class Employee implements Serializable {
     @Column(unique = true)
     private String email;
     private Integer age;
+
+    @Audited //Aplica a auditoria somente sobre o campo salary
     private Double salary;
     private Boolean married;
     @Column(name = "birth_date")
@@ -35,6 +42,11 @@ public class Employee implements Serializable {
     private LocalDateTime registerDate;
     @Column(name = "edit_date")
     private LocalDateTime editDate;
+    @Column(name = "create_on")
+    @CreationTimestamp
+    private LocalDateTime createOn;
+
+
     /**
      * Indica que `nicknames` é uma coleção de elementos básicos. A anotação @ElementCollection
      * é usada para mapear coleções de tipos básicos ou embutidos.
@@ -313,6 +325,14 @@ public class Employee implements Serializable {
 
     public void setEditDate(LocalDateTime editDate) {
         this.editDate = editDate;
+    }
+
+    public LocalDateTime getCreateOn() {
+        return createOn;
+    }
+
+    public void setCreateOn(LocalDateTime createOn) {
+        this.createOn = createOn;
     }
 
     @Override
