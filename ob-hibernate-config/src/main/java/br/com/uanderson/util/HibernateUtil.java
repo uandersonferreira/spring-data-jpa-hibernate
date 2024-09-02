@@ -1,5 +1,6 @@
 package br.com.uanderson.util;
 
+import br.com.uanderson.EmployeeInterceptor;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -29,7 +30,10 @@ public class HibernateUtil {
                 Metadata metadata = sources.getMetadataBuilder().build();
 
                 // Create SessionFactory - Usa os metadados para construir a SessionFactory.
-                sessionFactory = metadata.getSessionFactoryBuilder().build();
+                sessionFactory = metadata.getSessionFactoryBuilder()
+                        .applyInterceptor(new EmployeeInterceptor()) //Adicionando um interceptor a nossa session, para poder captar as operações realizadas
+                        //.applyInterceptor(new EmployeeInterceptor()) //Podemos aplicar mais de um Interceptor
+                        .build();
 
             } catch (Exception ex) {
                 ex.printStackTrace();

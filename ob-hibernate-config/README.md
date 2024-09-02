@@ -253,3 +253,24 @@ necessidade de uma chave estrangeira separada.
 - **Conceito:** No relacionamento bidirecional `ManyToMany`, ambas as classes conhecem uma à outra. A classe "dona" possui uma coleção da classe associada, e a classe associada possui uma coleção ou lista da classe "dona".
 - **Definição:** Um `Employee` pode estar associado a vários `Project`, e um `Project` pode ter vários `Employee` associados a ele.
 
+## Consultas 
+
+* Consultas:
+  * HQL
+  * Natives SQL
+  * NamedQueries
+  * Criteria API
+  * Métodos Hibernates/JPA: find, save, persist, delete, remove
+  
+## Gestão de Eventos
+
+* Lifecycle callbacks Events: prePersist, preUpdate, preRemove, postPersist...
+* @Audited: a nível de class / atributo
+* Interceptores
+
+## Migração de cambios de esquema en la base de datos
+
+* liquibase: https://www.liquibase.com/
+
+* flyway: https://www.red-gate.com/products/flyway/community/
+

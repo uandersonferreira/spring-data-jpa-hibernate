@@ -28,6 +28,7 @@ public class Employee implements Serializable {
     //Por default usa o nome do atributo com camelCase e não em snake_case
     private String firstName;
     @Column(name = "last_name")
+    @Audited //Aplica a auditoria somente sobre o campo salary
     private String lastName;
     @Column(unique = true)
     private String email;
