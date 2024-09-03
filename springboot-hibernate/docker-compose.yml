@@ -3,10 +3,10 @@ services:
 
   ### PostgreSQL database for Hibernate example
   db-ob-springboot-hibernate:
-    container_name: db-springboot-hibernate
+    container_name: db_springboot_hibernate
     image: postgres:latest # Imagem do Docker a ser usada
     environment:
-      POSTGRES_DB: db-springboot-hibernate # Nome do banco de dados
+      POSTGRES_DB: db_springboot_hibernate # Nome do banco de dados
       POSTGRES_USER: test # Usuário do banco de dados
       POSTGRES_PASSWORD: test123 # Senha do banco de dados
     ports:
