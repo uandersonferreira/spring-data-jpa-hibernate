@@ -112,6 +112,9 @@ comandos no PostgreSQL e o conceito relacionado ao rendimento e performance de u
    SELECT * FROM pg_stat_user_tables;
    -- Exibe estatísticas sobre as tabelas de usuário, incluindo contagem de linhas vivas e mortas.
    ```
+   
+8. Hibernate:
+   * Utilizar DTOs para as consultas, retornando apenas as colunas necessárias.
 
 ### Outros conceitos:
 

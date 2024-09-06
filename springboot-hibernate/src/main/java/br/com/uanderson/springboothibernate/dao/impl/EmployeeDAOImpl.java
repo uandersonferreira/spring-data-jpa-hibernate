@@ -1,6 +1,7 @@
 package br.com.uanderson.springboothibernate.dao.impl;
 
 import br.com.uanderson.springboothibernate.dao.EmployeeDAO;
+import br.com.uanderson.springboothibernate.dto.EmployeeDTO;
 import br.com.uanderson.springboothibernate.entities.Employee;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
@@ -24,12 +25,29 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public List<Employee> findAll() {
-        return session.createQuery("from Employee", Employee.class).list();
+        long start = System.currentTimeMillis();
+        List<Employee> employees = session.createQuery("from Employee", Employee.class).list();
+        long end = System.currentTimeMillis();
+        System.out.println("Time total findAll(): " + (end - start) + " ms");
+        return employees;
     }
 
-    private List<Employee> findAllByJpa(){
-        return entityManager.createQuery("from Employee", Employee.class).getResultList();
+    @Override
+    public List<Employee> findAllByJpa() {
+        long start = System.currentTimeMillis();
+        List<Employee> employees = entityManager.createQuery("from Employee", Employee.class).getResultList();
+        long end = System.currentTimeMillis();
+        System.out.println("Time total findAllByJpa(): " + (end - start) + " ms");
+        return employees;
     }
 
+    @Override
+    public List<EmployeeDTO> findAllDTO() {
+        long start = System.currentTimeMillis();
+        List<EmployeeDTO> employeeDTOS = session.createQuery("SELECT new br.com.uanderson.springboothibernate.dto.EmployeeDTO(e.id, e.email) FROM Employee e").list();
+        long end = System.currentTimeMillis();
+        System.out.println("Time total findAllDTO(): " + (end - start) + " ms");
+        return employeeDTOS;
+    }
 
 }//class

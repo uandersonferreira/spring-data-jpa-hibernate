@@ -1,11 +1,16 @@
 package br.com.uanderson.springboothibernate;
 
 import br.com.uanderson.springboothibernate.dao.EmployeeDAO;
+import br.com.uanderson.springboothibernate.dto.EmployeeDTO;
 import br.com.uanderson.springboothibernate.entities.Employee;
 import br.com.uanderson.springboothibernate.repository.EmployeeRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @SpringBootApplication
 public class SpringbootHibernateApplication {
@@ -15,19 +20,42 @@ public class SpringbootHibernateApplication {
 
         EmployeeRepository employeeRepository = context.getBean(EmployeeRepository.class);
 
-        Employee employee0 = new Employee("Employee 1", 25, "employee1@gmail.com");
-        Employee employee1 = new Employee("Employee 2", 32, "employee2@gmail.com");
+        //Employee employee0 = new Employee("Employee 1", 25, "employee1@gmail.com");
+        //Employee employee1 = new Employee("Employee 2", 32, "employee2@gmail.com");
+
+        List<Employee> employeeList = new ArrayList<>();
+        Random random = new Random();
+
+//        for (int i = 0; i < 50_000; i++) {
+//            // Gerar valores aleatórios
+//            String name = String.format("Employee %d", i + 1);  // Nome único para cada Employee
+//            int age = random.nextInt(43) + 18;  // Idade entre 18 e 60 anos
+//            String email = String.format("employee%d@gmail.com", i + 1);  // Email único para cada Employee
+//
+//            // Criar o Employee com os valores gerados
+//            Employee employeeToInsert = new Employee(name, age, email);
+//            employeeList.add(employeeToInsert);
+//        }
+
+        //employeeRepository.saveAll(employeeList);
 
         // Exemplo com a dependecencia do Spring Data JPA
-        employeeRepository.save(employee0);
-        employeeRepository.save(employee1);
+        //employeeRepository.save(employee0);
+        //employeeRepository.save(employee1);
 
         System.out.println("Saved employees 1: " + employeeRepository.findAll());
 
         //Exemplo com Hibernate puro, conforme as aulas anteriores
         EmployeeDAO employeeDAO = context.getBean(EmployeeDAO.class);
+        List<EmployeeDTO> allDTO = employeeDAO.findAllDTO();
+        List<Employee> all = employeeDAO.findAll();
+        List<Employee> allByJpa = employeeDAO.findAllByJpa();
 
-        System.out.println("Saved employees 2: " + employeeDAO.findAll());
+
+        //System.out.println("Saved employees findAll(): " + employeeDAO.findAll());
+
+        //System.out.println("Saved employees findAllDTO(): " + employeeDAO.findAllDTO());
+
 
 
     }//main

@@ -1,4 +1,4 @@
-INSERT INTO employee (id, name, age, email) VALUES (3,'Uanderson', 22, 'uandersonteste@company.com');
+-- INSERT INTO employee (id, name, age, email) VALUES (3,'Uanderson', 22, 'uandersonteste@company.com');
 
 /*
 -- INSERIR DADOS EM LOTE
