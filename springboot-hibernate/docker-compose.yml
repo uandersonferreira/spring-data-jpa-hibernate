@@ -16,6 +16,7 @@ services:
     command: -p 5432 # Comando para especificar a porta do Postgres
     volumes:
       - volumes-springboot-hibernate-data:/var/lib/postgresql/data # Volume para persistência de dados
+      - /home/uanderson/Documentos/data_host/backup:/backup # Volume para acessar o arquivo do host. CAMINHO-HOST:/PASTA-CONTAINER DOS DADOS
 
 volumes:
   volumes-springboot-hibernate-data: #Volume para dados
