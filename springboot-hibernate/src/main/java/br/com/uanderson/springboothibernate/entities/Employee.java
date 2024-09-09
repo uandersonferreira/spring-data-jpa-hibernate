@@ -18,7 +18,8 @@ public class Employee implements Serializable {
     private Integer age;
     private String email;
 
-    public Employee() {}
+    public Employee() {
+    }
 
     public Employee(String name, Integer age, String email) {
         this.name = name;
