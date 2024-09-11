@@ -1,40 +1,63 @@
-# Particionamento de tabelas no PostgreSQL
+# Particionamento de Tabelas no PostgreSQL
 
-O particionamento por **rango** (ou intervalo) é um tipo de particionamento em que os dados são divididos com base em um
-intervalo contínuo de valores em uma coluna específica. Cada partição contém um subconjunto de dados cujo valor na
-coluna de particionamento se encontra dentro de um determinado intervalo.
+O particionamento de tabelas no PostgreSQL permite que os dados sejam divididos em partes menores, chamadas partições,
+para facilitar a manutenção e melhorar o desempenho em grandes volumes de dados. Existem diferentes métodos de
+particionamento, como por **intervalo (rango)**, **lista**, e **hash**. Abaixo, detalhamos cada um deles.
 
-### O que é o particionamento por rango?
+## Particionamento por Intervalo (Range)
 
-No exemplo da aula, a tabela `employees` está particionada pela coluna `birth_date` utilizando o tipo de
-particionamento por intervalo de datas (range). Assim, você pode criar várias partições da tabela principal, onde cada
-partição armazenará apenas os dados cujas datas de nascimento se enquadrem em um intervalo específico.
+### O que é o particionamento por intervalo?
 
-- **Exemplo**: Para o ano de 2019, criamos uma partição que conterá todos os registros de funcionários cujo `birth_date`
-  seja entre 1º de janeiro de 2019 e 31 de dezembro de 2019.
+O particionamento por intervalo divide os dados com base em um intervalo contínuo de valores em uma coluna específica.
+Cada partição armazena dados cujo valor da coluna particionada se encontra em um intervalo específico.
+
+- **Exemplo**: Se particionarmos uma tabela de funcionários pela data de nascimento (`birth_date`), cada partição
+  conterá dados de funcionários cujas datas de nascimento caem dentro de um determinado intervalo de anos ou meses.
+
+### Exemplo prático:
+
+```sql
+CREATE TABLE employees
+(
+    id         BIGSERIAL,
+    birth_date DATE        NOT NULL,
+    first_name VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id, birth_date)
+) PARTITION BY RANGE (birth_date);
+```
+
+Aqui, a tabela `employees` foi particionada pela coluna `birth_date`.
 
 ### Por que usamos chaves primárias compostas?
 
-Ao criar uma tabela particionada, como a `employees`, onde a coluna usada para particionamento faz parte da chave
-primária, a chave primária precisa incluir essa coluna. Isso é necessário para garantir a unicidade dos dados em todas
-as partições, já que cada partição representa um subconjunto dos dados da tabela principal.
+### Por que usamos chaves primárias compostas?
 
-- **Exemplo**: Na tabela `employees`, o campo `id` pode ser único dentro de uma partição, mas pode haver registros em
-  outras partições com o mesmo `id`. Por isso, para garantir unicidade em todas as partições, a chave primária é
-  composta por `id` e `birth_date`.
+Ao particionar por intervalos, a coluna usada para o particionamento (neste caso, `birth_date`) precisa fazer parte da
+chave primária, pois a chave primária deve garantir unicidade entre as partições.
 
-### Por que o intervalo de 2019 não vai até 31 de dezembro de 2019?
+- **Exemplo**: O `id` pode ser único dentro de uma partição, mas não necessariamente em outra. Para garantir que cada
+  registro seja único em todas as partições, a chave primária inclui tanto o `id` quanto o `birth_date`.
 
-No PostgreSQL, o particionamento por range define o intervalo de dados de forma que o valor final do intervalo (neste
-caso, `2020-01-01`) **não está incluído** na partição. Portanto, para garantir que todas as datas de 2019 estejam na
-partição, o intervalo deve ser definido como:
+### Por que o intervalo de 2019 não vai até 31 de dezembro?
+
+No PostgreSQL, a cláusula `TO` define o final de um intervalo **de forma exclusiva**. Portanto, para garantir que todas
+as datas de 2019 sejam incluídas, o intervalo precisa ser definido até `2020-01-01`:
 
 ```sql
-FOR VALUES FROM ('2019-01-01') TO ('2020-01-01');
+CREATE TABLE employees_2019 PARTITION OF employees
+    FOR VALUES FROM
+(
+    '2019-01-01'
+) TO
+(
+    '2020-01-01'
+);
 ```
 
-Isso inclui as datas de `2019-01-01` a `2019-12-31`, pois o valor inicial é inclusivo (`FROM`), e o valor final é
-exclusivo (`TO`). Se fosse definido até `'2019-12-31'`, a data de `2019-12-31` ficaria fora do intervalo e causaria
+Este intervalo inclui todas as datas de `2019-01-01` até `2019-12-31`, já que o valor final (`2020-01-01`) não está
+incluído.
+O valor inicial é inclusivo (`FROM`), e o valor final é exclusivo (`TO`). Se fosse definido até `'2019-12-31'`, a data
+de `2019-12-31` ficaria fora do intervalo e causaria
 problemas.
 
 ---
@@ -43,9 +66,9 @@ problemas.
 
 #### O que é o particionamento por lista?
 
-O particionamento por lista divide os dados com base em valores específicos que são definidos como uma lista discreta. É
-ideal para situações onde você tem um conjunto fixo de categorias ou grupos, e cada grupo pode ser representado por uma
-lista de valores.
+O particionamento por lista divide os dados com base em valores específicos 
+de uma coluna. É ideal para situações onde você tem um conjunto fixo de categorias 
+ou grupos, e cada grupo pode ser representado por uma lista de valores.
 
 **Como funciona:**
 
@@ -89,6 +112,7 @@ VALUES ('2019-03-01', 'Employee 1', 'EE'),
        ('2019-04-01', 'Employee 4', 'FR'),
        ('2019-04-01', 'Employee 5', 'DE');
 ```
+Neste exemplo, a tabela `employees` é particionada pela coluna country_code, onde cada partição armazena os funcionários de diferentes países.
 
 **Consultas e EXPLAIN:**
 
@@ -107,8 +131,9 @@ VALUES ('2019-03-01', 'Employee 1', 'EE'),
 
 #### O que é o particionamento por hash?
 
-O particionamento por hash distribui os dados entre várias partições com base no valor de hash de uma coluna. Esse
-método é útil para balancear a carga e otimizar o desempenho quando você deseja uma distribuição uniforme dos dados.
+O particionamento por hash distribui os dados de forma uniforme entre várias partições com base em um valor hash
+calculado de uma coluna. Ele é útil para balancear a carga de dados, distribuindo-os de maneira uniforme entre as
+partições.
 
 **Como funciona:**
 
@@ -156,11 +181,12 @@ INSERT INTO dept (SELECT generate_series(0, 200000));
 - **Selecionar dados**: `SELECT * FROM dept WHERE id = 47;`
 - **Analisar plano de execução**: `EXPLAIN ANALYZE SELECT * FROM dept WHERE id = 47;`
 
-**Notas:**
+### Considerações Finais:
 
-- O particionamento por hash não é adequado para consultas que se baseiam em intervalos de valores.
-- Ele é eficaz para garantir uma distribuição uniforme dos dados, evitando que uma partição receba um volume
-  desproporcional de dados.
+- O **particionamento por intervalo** é ideal para dados temporais.
+- O **particionamento por lista** é melhor utilizado para categorias fixas, como regiões ou tipos de produtos.
+- O **particionamento por hash** distribui os dados uniformemente e é ótimo para grandes volumes, mas não é adequado
+  para consultas baseadas em intervalos.
 
 ---
 
