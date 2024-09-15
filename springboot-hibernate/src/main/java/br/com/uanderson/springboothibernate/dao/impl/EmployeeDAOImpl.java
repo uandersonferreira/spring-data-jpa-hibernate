@@ -5,6 +5,7 @@ import br.com.uanderson.springboothibernate.dto.EmployeeDTO;
 import br.com.uanderson.springboothibernate.entities.Employee;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,6 +49,20 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         long end = System.currentTimeMillis();
         System.out.println("Time total findAllDTO(): " + (end - start) + " ms");
         return employeeDTOS;
+    }
+
+    @Override
+    public List<Employee> findByName(String name) {
+        // Para demonstrar o uso dos indices.
+        long start = System.currentTimeMillis();
+
+        Query<Employee> query = session.createQuery("from Employee where name = :name", Employee.class);
+        query.setParameter("name", name);
+        List<Employee> employees = query.getResultList();
+        long end = System.currentTimeMillis();
+        System.out.println("Time total findAllDTO(): " + (end - start) + " ms");
+
+        return employees;
     }
 
 }//class

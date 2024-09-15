@@ -10,4 +10,7 @@ public interface EmployeeDAO {
     List<Employee> findAll();
     List<Employee> findAllByJpa();
     List<EmployeeDTO> findAllDTO();
+
+    // Para demonstrar o uso dos indices.
+    List<Employee> findByName(String name);
 }

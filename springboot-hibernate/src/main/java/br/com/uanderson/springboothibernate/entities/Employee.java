@@ -1,11 +1,9 @@
 package br.com.uanderson.springboothibernate.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 public class Employee implements Serializable {
@@ -18,13 +16,21 @@ public class Employee implements Serializable {
     private Integer age;
     private String email;
 
+    @Column(name = "register_date")
+    private LocalDate registerDate;
+    private Boolean active;
+    private Double salary;
+
     public Employee() {
     }
 
-    public Employee(String name, Integer age, String email) {
+    public Employee(String name, Integer age, String email, LocalDate registerDate, Boolean active, Double salary) {
         this.name = name;
         this.age = age;
         this.email = email;
+        this.registerDate = registerDate;
+        this.active = active;
+        this.salary = salary;
     }
 
     public Long getId() {
@@ -59,6 +65,30 @@ public class Employee implements Serializable {
         this.email = email;
     }
 
+    public LocalDate getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(LocalDate registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -66,7 +96,9 @@ public class Employee implements Serializable {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
+                ", registerDate=" + registerDate +
+                ", active=" + active +
+                ", salary=" + salary +
                 '}';
     }
-
 }//class

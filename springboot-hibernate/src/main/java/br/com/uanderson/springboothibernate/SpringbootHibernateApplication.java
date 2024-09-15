@@ -1,13 +1,14 @@
 package br.com.uanderson.springboothibernate;
 
-import br.com.uanderson.springboothibernate.dao.EmployeeDAO;
-import br.com.uanderson.springboothibernate.dto.EmployeeDTO;
 import br.com.uanderson.springboothibernate.entities.Employee;
 import br.com.uanderson.springboothibernate.repository.EmployeeRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,36 +27,59 @@ public class SpringbootHibernateApplication {
         List<Employee> employeeList = new ArrayList<>();
         Random random = new Random();
 
-//        for (int i = 0; i < 50_000; i++) {
-//            // Gerar valores aleatórios
-//            String name = String.format("Employee %d", i + 1);  // Nome único para cada Employee
-//            int age = random.nextInt(43) + 18;  // Idade entre 18 e 60 anos
-//            String email = String.format("employee%d@gmail.com", i + 1);  // Email único para cada Employee
-//
-//            // Criar o Employee com os valores gerados
-//            Employee employeeToInsert = new Employee(name, age, email);
-//            employeeList.add(employeeToInsert);
-//        }
+        for (int i = 0; i < 50_000; i++) {
+            // Gerar valores aleatórios
+            String name = String.format("Employee %d", i + 1);  // Nome único para cada Employee
+            int age = random.nextInt(43) + 18;  // Idade entre 18 e 60 anos
+            String email = String.format("employee%d@gmail.com", i + 1);  // Email único para cada Employee
+            double randomSalary = random.nextDouble(61_000);
+            double salary = new BigDecimal(randomSalary).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+
+            // Criar o Employee com os valores gerados
+            Employee employeeToInsert = new Employee(name, age, email, LocalDate.now(), true, salary);
+            employeeList.add(employeeToInsert);
+        }
+
+        for (int i = 50_000; i < 100_000; i++) {
+            // Gerar valores aleatórios
+            String name = String.format("Employee %d", i + 1);  // Nome único para cada Employee
+            int age = random.nextInt(43) + 18;  // Idade entre 18 e 60 anos
+            String email = String.format("employee%d@gmail.com", i + 1);  // Email único para cada Employee
+            double randomSalary = random.nextDouble(61_000);
+            double salary = new BigDecimal(randomSalary).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+            // Criar o Employee com os valores gerados
+            Employee employeeToInsert = new Employee(name, age, email, LocalDate.of(2020, 1, 1), false, salary);
+            employeeList.add(employeeToInsert);
+        }
+
+        for (int i = 100_000; i < 200_000; i++) {
+            // Gerar valores aleatórios
+            String name = String.format("Employee %d", i + 1);  // Nome único para cada Employee
+            int age = random.nextInt(43) + 18;  // Idade entre 18 e 60 anos
+            String email = String.format("employee%d@gmail.com", i + 1);  // Email único para cada Employee
+            double randomSalary = random.nextDouble(61_000);
+            double salary = new BigDecimal(randomSalary).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+            // Criar o Employee com os valores gerados
+            Employee employeeToInsert = new Employee(name, age, email, LocalDate.of(2019, 1, 1), true, salary);
+            employeeList.add(employeeToInsert);
+        }
 
         //employeeRepository.saveAll(employeeList);
 
-        // Exemplo com a dependecencia do Spring Data JPA
-        //employeeRepository.save(employee0);
-        //employeeRepository.save(employee1);
-
-        System.out.println("Saved employees 1: " + employeeRepository.findAll());
 
         //Exemplo com Hibernate puro, conforme as aulas anteriores
-        EmployeeDAO employeeDAO = context.getBean(EmployeeDAO.class);
-        List<EmployeeDTO> allDTO = employeeDAO.findAllDTO();
-        List<Employee> all = employeeDAO.findAll();
-        List<Employee> allByJpa = employeeDAO.findAllByJpa();
+        //EmployeeDAO employeeDAO = context.getBean(EmployeeDAO.class);
+        //List<EmployeeDTO> allDTO = employeeDAO.findAllDTO();
+        //List<Employee> all = employeeDAO.findAll();
+        //List<Employee> allByJpa = employeeDAO.findAllByJpa();
 
 
         //System.out.println("Saved employees findAll(): " + employeeDAO.findAll());
 
         //System.out.println("Saved employees findAllDTO(): " + employeeDAO.findAllDTO());
-
 
 
     }//main
