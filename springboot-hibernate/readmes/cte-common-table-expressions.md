@@ -114,6 +114,85 @@ INNER JOIN product_groups USING (group_id);
 ```
 Retorna o preço do produto anterior dentro de cada grupo de produtos.
 
+- Exemplo do youtube:
+> https://www.youtube.com/watch?v=jbES0zODk_4
+
+Esse SQL tem como objetivo calcular o intervalo de dias entre um pedido atual e o último pedido
+de cada cliente, permitindo que a empresa acompanhe o tempo que cada cliente levou entre suas compras.
+
+
+```sql
+SELECT A.idPedido,
+       A.numOrdem,
+       A.idCliente,
+       B.Nome,
+       A.dataPedido,
+       LAG( dataPedido, 1, dataPedido ) OVER (PARTITION BY B.idCliente ORDER BY B.idCliente, dataPedido) AS dataUltimoPedido,
+        DATEDIFF( DAY, LAG( dataPedido, 1, dataPedido ) OVER (PARTITION BY B.idCliente ORDER BY B.idCliente, dataPedido ), A.dataPedido ) AS DiasSemCompras
+FROM tb_pedidos_vendas A
+         INNER JOIN tb_clientes B ON A.idCliente = B.idCliente
+ORDER BY B.idCliente, A.dataPedido;
+
+```
+Vamos analisar o que cada parte faz:
+
+### 1. **Seleção de colunas principais**
+```sql
+SELECT A.idPedido,         -- Identificador do pedido atual.
+       A.numOrdem,         -- Número da ordem do pedido.
+       A.idCliente,        -- Identificador do cliente que fez o pedido.
+       B.Nome,             -- Nome do cliente (obtido da tabela de clientes).
+       A.dataPedido,       -- Data em que o pedido atual foi feito.
+```
+Essas colunas vêm da tabela de pedidos (`tb_pedidos_vendas`, representada pelo alias `A`) e da tabela de clientes (`tb_clientes`, representada por `B`).
+
+### 2. **Função LAG** para obter a data do último pedido
+```sql
+LAG( dataPedido, 1, dataPedido ) OVER (PARTITION BY B.idCliente ORDER BY B.idCliente, dataPedido) AS dataUltimoPedido,
+```
+A função `LAG` é usada para acessar a **data do pedido anterior** (último pedido) para cada cliente. Aqui está o que cada parte faz:
+- **`LAG(dataPedido, 1, dataPedido)`**:
+    - O primeiro argumento (`dataPedido`) é a coluna que contém a data do pedido.
+    - O segundo argumento (`1`) indica que queremos pegar o valor da linha **anterior** à linha atual.
+    - O terceiro argumento (`dataPedido`) é o valor que será retornado caso não haja um pedido anterior (por exemplo, no primeiro pedido do cliente).
+- **`OVER (PARTITION BY B.idCliente ORDER BY B.idCliente, dataPedido)`**:
+    - O `PARTITION BY B.idCliente` indica que estamos calculando a função de janela separadamente para cada cliente.
+    - O `ORDER BY B.idCliente, dataPedido` define que queremos classificar os pedidos por cliente e data do pedido, para garantir que o cálculo da diferença seja correto.
+
+Isso resulta em uma nova coluna `dataUltimoPedido` que contém a data do pedido anterior para cada cliente.
+
+### 3. **Diferença de dias entre os pedidos**
+```sql
+DATEDIFF( DAY, LAG( dataPedido, 1, dataPedido ) OVER (PARTITION BY B.idCliente ORDER BY B.idCliente, dataPedido), A.dataPedido ) AS DiasSemCompras
+```
+Essa linha calcula a diferença de dias entre o pedido atual e o pedido anterior do mesmo cliente:
+- **`DATEDIFF(DAY, ...)`**: A função `DATEDIFF` calcula a diferença entre duas datas. O primeiro argumento (`DAY`) especifica que a diferença será medida em dias.
+- O primeiro argumento dentro de `DATEDIFF` é novamente a função `LAG`, que pega a data do pedido anterior.
+- O segundo argumento é a `dataPedido` da linha atual.
+- O resultado é o número de dias desde o último pedido feito pelo cliente, o que é armazenado na coluna `DiasSemCompras`.
+
+### 4. **Junção entre pedidos e clientes**
+```sql
+FROM tb_pedidos_vendas A
+INNER JOIN tb_clientes B ON A.idCliente = B.idCliente
+```
+Essa parte realiza uma **junção interna** (`INNER JOIN`) entre a tabela de pedidos (`tb_pedidos_vendas`) e a tabela de clientes (`tb_clientes`), utilizando o `idCliente` como chave para unir as informações de ambos os lados.
+
+### 5. **Ordenação dos resultados**
+```sql
+ORDER BY B.idCliente, A.dataPedido;
+```
+A cláusula `ORDER BY` organiza o resultado final da consulta, ordenando primeiramente pelos clientes (`B.idCliente`) e, dentro de cada cliente, ordenando pelos pedidos em ordem cronológica (`A.dataPedido`).
+
+### Explicação geral do que o SQL faz:
+- Para cada cliente, a consulta recupera os pedidos feitos, exibindo o identificador do pedido, número da ordem, cliente, nome do cliente e data do pedido.
+- Ela usa a função de janela `LAG` para encontrar a data do pedido anterior (último pedido) e a função `DATEDIFF` para calcular a quantidade de dias entre o último pedido e o pedido atual.
+- Os resultados são organizados por cliente e data de pedido, o que permite observar a frequência com que cada cliente faz pedidos, ajudando a identificar o intervalo entre as compras.
+
+Isso pode ser útil para análise de retenção de clientes, frequência de compra ou para identificar padrões de comportamento de consumo.
+
+
+
 ### 5. **LAST_VALUE**
 - **Descrição:** Retorna o valor da última linha dentro da partição, conforme a ordem especificada. Normalmente, é necessário usar uma cláusula de janela específica para definir o intervalo da janela.
 - **Exemplo:**
