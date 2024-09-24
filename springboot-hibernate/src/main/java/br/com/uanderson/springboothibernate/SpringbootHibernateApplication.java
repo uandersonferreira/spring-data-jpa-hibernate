@@ -80,7 +80,7 @@ public class SpringbootHibernateApplication {
             );
         }//for
 
-        employeeRepository.saveAll(employeeList);
+        //employeeRepository.saveAll(employeeList);
 
 
         //Exemplo com Hibernate puro, conforme as aulas anteriores
@@ -93,8 +93,24 @@ public class SpringbootHibernateApplication {
         //System.out.println("Saved employees findAll(): " + employeeDAO.findAll());
         //System.out.println("Saved employees findAllDTO(): " + employeeDAO.findAllDTO());
 
-        List<Employee> last20Employees = employeeDAO.findAllLastPage();
-        System.out.println(last20Employees);
+        //ex: paginação
+        //List<Employee> last20Employees = employeeDAO.findAllLastPage();
+        //System.out.println(last20Employees);
+
+        //ex: transaction
+        Employee employeeDB = employeeDAO.save(
+                new Employee(
+                        null,
+                        "Empleado transaction",
+                        30,
+                        "transaction@example.com",
+                        LocalDate.of(2019, 1, 1),
+                        true,
+                        40000d
+                )
+        );
+        System.out.println("employee transaction to save: " + employeeDB);
+        System.out.println("Saved employee transaction: " + employeeRepository.findById(employeeDB.getId()).get());
 
 
     }//main

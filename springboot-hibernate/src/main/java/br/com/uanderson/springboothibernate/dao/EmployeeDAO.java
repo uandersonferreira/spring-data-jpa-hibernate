@@ -16,4 +16,9 @@ public interface EmployeeDAO {
 
     //Para demonstrar o uso de paginação
     List<Employee> findAllLastPage();
+
+    //Para demonstrar o uso de transaction
+    Employee save(Employee employee);
+
+
 }

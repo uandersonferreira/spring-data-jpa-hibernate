@@ -98,4 +98,45 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return lastPageEmployees;
     }
 
+    @Override
+    public Employee save(Employee employee) {
+        try {
+            session.beginTransaction(); // Inicia uma transação ativa
+
+            session.persist(employee);
+
+            session.getTransaction().commit(); //que confirmaria a transação para salvar no Banco de dados
+
+        }catch (Exception ex){
+            // Se ocorrer um erro, desfaz a transação
+            session.getTransaction().rollback();
+            ex.printStackTrace();
+        }
+
+        return employee;
+        /*
+        O método session.persist(employee), é responsável por inserir o objeto Employee no
+        banco de dados. No entanto, essa operação precisa ocorrer dentro de uma transação ativa.
+
+        - session.beginTransaction();
+        - session.getTransaction().commit();
+
+        Sem esses dois comandos, o Hibernate não sabe quando deve enviar as alterações para o banco de dados.
+        Mesmo que você chame persist(), o Hibernate só armazena as mudanças no seu "contexto de persistência"
+        até que uma transação seja iniciada e confirmada.
+
+        - session.beginTransaction(): Inicia a transação, informando ao Hibernate que as operações
+        seguintes devem ser tratadas como parte de uma transação.
+
+        - session.getTransaction().commit(): Finaliza a transação, confirmando as operações no banco de dados.
+         É somente nesse momento que o Hibernate envia os dados para serem inseridos fisicamente no banco.
+
+         Portanto, sem esses dois passo, o registro é gerado, mas nunca commitado(o comando SQL INSERT ) para o banco de dados.
+
+
+         */
+    }
+
 }//class
+
+
