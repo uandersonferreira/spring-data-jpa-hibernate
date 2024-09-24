@@ -1,13 +1,12 @@
 package br.com.uanderson.springboothibernate;
 
+import br.com.uanderson.springboothibernate.dao.EmployeeDAO;
 import br.com.uanderson.springboothibernate.entities.Employee;
 import br.com.uanderson.springboothibernate.repository.EmployeeRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,8 @@ public class SpringbootHibernateApplication {
         List<Employee> employeeList = new ArrayList<>();
         Random random = new Random();
 
-        for (int i = 0; i < 50_000; i++) {
+        // DESCOMENTAR PARA INSERIR DADOS DEMO PARA TESTE
+ /*       for (int i = 0; i < 50_000; i++) {
             // Gerar valores aleatórios
             String name = String.format("Employee %d", i + 1);  // Nome único para cada Employee
             int age = random.nextInt(43) + 18;  // Idade entre 18 e 60 anos
@@ -65,21 +65,36 @@ public class SpringbootHibernateApplication {
             // Criar o Employee com os valores gerados
             Employee employeeToInsert = new Employee(name, age, email, LocalDate.of(2019, 1, 1), true, salary);
             employeeList.add(employeeToInsert);
-        }
+        }*/
 
-        //employeeRepository.saveAll(employeeList);
+        // INSERINDO 25 NOVOS REGISTROS PARA COMPROVAR A PAGINAÇÃO
+        for (int i = 100000; i < 200000; i++) {
+            employeeList.add(new Employee(
+                    null,
+                    "Empleado Pagination" + i,
+                    30,
+                    "emp" + i + "pagination@example.com",
+                    LocalDate.of(2019, 1, 1),
+                    true,
+                    40000d)
+            );
+        }//for
+
+        employeeRepository.saveAll(employeeList);
 
 
         //Exemplo com Hibernate puro, conforme as aulas anteriores
-        //EmployeeDAO employeeDAO = context.getBean(EmployeeDAO.class);
+        EmployeeDAO employeeDAO = context.getBean(EmployeeDAO.class);
+
         //List<EmployeeDTO> allDTO = employeeDAO.findAllDTO();
         //List<Employee> all = employeeDAO.findAll();
         //List<Employee> allByJpa = employeeDAO.findAllByJpa();
 
-
         //System.out.println("Saved employees findAll(): " + employeeDAO.findAll());
-
         //System.out.println("Saved employees findAllDTO(): " + employeeDAO.findAllDTO());
+
+        List<Employee> last20Employees = employeeDAO.findAllLastPage();
+        System.out.println(last20Employees);
 
 
     }//main

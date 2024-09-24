@@ -13,4 +13,7 @@ public interface EmployeeDAO {
 
     // Para demonstrar o uso dos indices.
     List<Employee> findByName(String name);
+
+    //Para demonstrar o uso de paginação
+    List<Employee> findAllLastPage();
 }

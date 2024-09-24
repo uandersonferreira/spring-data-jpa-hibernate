@@ -33,6 +33,16 @@ public class Employee implements Serializable {
         this.salary = salary;
     }
 
+    public Employee(Long id, String name, Integer age, String email, LocalDate registerDate, Boolean active, Double salary) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.registerDate = registerDate;
+        this.active = active;
+        this.salary = salary;
+    }
+
     public Long getId() {
         return id;
     }

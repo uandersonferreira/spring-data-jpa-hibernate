@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Repository
 public class EmployeeDAOImpl implements EmployeeDAO {
-    private final Session session; // Hibernate
+    private final Session session; // Hibernate (por ser gerenciada pelo spring não precisamos abrir/fechar)
     private final EntityManager entityManager; // JPA
 
     public EmployeeDAOImpl(Session session, EntityManager entityManager) {
@@ -63,6 +63,39 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         System.out.println("Time total findAllDTO(): " + (end - start) + " ms");
 
         return employees;
+    }
+
+    @Override
+    public List<Employee> findAllLastPage() {
+        // Define o tamanho da página, ou seja, o número de registros por página
+        int size = 20;
+
+        // Consulta para contar o número total de registros na tabela Employee
+        String countHQL = "SELECT count(e.id) FROM Employee e";
+
+        // Executa a consulta para obter a contagem total de registros
+        Long countResult = (Long) session.createQuery(countHQL).uniqueResult(); // Ex: 200_000 registros
+
+        // Calcula o número da última página.
+        // O método Math.ceil() garante que o resultado seja arredondado para cima, caso haja registros "extras"
+        // (se countResult não for um múltiplo exato de size)
+        int lastPageNum = (int) Math.ceil(countResult / (double) size);
+
+        // Cria a consulta para recuperar os empregados da tabela Employee
+        Query query = session.createQuery("from Employee");
+
+        // Define o primeiro registro que será retornado. Como estamos buscando a última página,
+        // multiplicamos o número da última página - 1 (porque a contagem começa em 0) pelo tamanho da página
+        query.setFirstResult((lastPageNum - 1) * size);
+
+        // Define o número máximo de resultados que queremos obter, que é o tamanho da página
+        query.setMaxResults(size);
+
+        // Executa a consulta e recupera a lista de empregados da última página
+        List<Employee> lastPageEmployees = query.list();
+
+        // Retorna a lista de empregados da última página
+        return lastPageEmployees;
     }
 
 }//class
