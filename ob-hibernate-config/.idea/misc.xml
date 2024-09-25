@@ -6,6 +6,7 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/../springboot-hibernate/pom.xml" />
+        <option value="$PROJECT_DIR$/../ob-hibernate-json/pom.xml" />
       </list>
     </option>
   </component>
