@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  ### PostgreSQL database for Hibernate example
+  db-ob-springboot-hibernate:
+    container_name: db_batch_hibernate
+    image: postgres:latest # Imagem do Docker a ser usada
+    environment:
+      POSTGRES_DB: db_batch_hibernate # Nome do banco de dados
+      POSTGRES_USER: test # Usuário do banco de dados
+      POSTGRES_PASSWORD: test123 # Senha do banco de dados
+    ports:
+      - "5432:5432" # Mapeamento de portas: host:container
+    expose:
+      - 5432 # Expor a porta para os outros serviços no Docker
+    command: -p 5432 # Comando para especificar a porta do Postgres
+    volumes:
+      - volumes-springboot-hibernate-data:/var/lib/postgresql/data # Volume para persistência de dados
+      - /home/uanderson/Documentos/data_host/backup:/backup # Volume para acessar o arquivo do host. CAMINHO-HOST:/PASTA-CONTAINER DOS DADOS
+
+volumes:
+  volumes-springboot-hibernate-data: #Volume para dados
