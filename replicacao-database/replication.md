@@ -1,3 +1,5 @@
+**Aqui está a tradução para o português:
+
 # Replicação no PostgreSQL
 
 **Requisitos:** ter o Docker instalado.  
