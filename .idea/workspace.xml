@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/src/main/java/br/com/uanderson/obhinernateinsertbatch/ObHinernateInsertBatchApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/src/main/java/br/com/uanderson/obhinernateinsertbatch/dao/EmployeeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/src/main/java/br/com/uanderson/obhinernateinsertbatch/dao/impl/EmployeeDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/src/main/java/br/com/uanderson/obhinernateinsertbatch/entities/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/src/main/resources/hibernate.cfg.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hinernate-insert-batch/src/test/java/br/com/uanderson/obhinernateinsertbatch/ObHinernateInsertBatchApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/replicacao-database/clusters.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/replicacao-database/entendendo-permissoes-linux.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/replicacao-database/etcd.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/replicacao-database/patroni-conf-disponibilizade.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,20 +17,25 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="course-openBootcamp-023-criando-replica-de-databases" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "uandersonferreira"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;uandersonferreira&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:uandersonferreira/spring-data.git",
-    "accountId": "d4f6ced4-e0ea-465a-9092-539b7e05e56f"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:uandersonferreira/spring-data.git&quot;,
+    &quot;accountId&quot;: &quot;d4f6ced4-e0ea-465a-9092-539b7e05e56f&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -42,21 +43,28 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2jd5oCzb9itU9iXijYl4sNY5HqR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "course-openBootcamp-021-como-guardar-dados-em-json",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/uanderson/Documentos/spring-data-jpa-hibernate",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;course-openBootcamp-024-criando-clusters-em-postgresql&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/uanderson/Documentos/spring-data-jpa-hibernate&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
