@@ -34,6 +34,8 @@ docker run -itd --name=node3 --net clusternet --ip 172.20.0.12 ubuntu:20.04
 | Número de Endereços Utilizáveis | 65.534         | Número de endereços IP disponíveis para atribuição a hosts.                           |
 
 ## Configuração node1, node2, node3 (repetir os passos nos 3 contêineres)
+> Caso queira clonar a imagem do node1 para os outros node e depois so trocar o IP
+> Leia o readme [Replicando nodes com docker](replicando-nodes-docker.md).
 
 ```bash
 docker exec -it node1 bash 
@@ -48,6 +50,8 @@ apt upgrade
 ```bash
 apt-get install lsb-release wget nano postgresql -y
 
+service postgresql stop
+
 ln -s /usr/lib/postgresql/12/bin/* /usr/sbin/
 
 nano /etc/postgresql/12/main/pg_hba.conf
@@ -59,10 +63,16 @@ Adicionar a linha:
 host    all             all             172.20.0.0/16            md5
 ```
 
+
 Reiniciar o serviço:
 
 ```bash
+service postgresql status
+
+service postgresql start
+
 service postgresql restart
+
 ```
 
 ### Instalação do Python
@@ -76,7 +86,9 @@ pip3 install --upgrade pip
 ### Instalação do Patroni
 
 ```bash
-pip install patroni psycopg2-binary python-etcd
+pip install patroni
+pip install python-etcd
+pip install psycopg2
 ```
 
 ## Configuração do Patroni
@@ -88,10 +100,10 @@ mkdir /etc/patroni
 
 cd /etc/patroni/
 
-nano config.yml
+nano patroni.yml
 ```
 
-Adicionar o seguinte conteúdo ao arquivo `config.yml`:
+Adicionar o seguinte conteúdo ao arquivo `patroni.yml`:
 
 ```yaml
 scope: postgres
@@ -103,7 +115,7 @@ restapi:
   connect_address: 172.20.0.10:8008
 
 etcd:
-  host: 172.20.0.13:2379
+  host: 172.20.0.13:2379 #IP do NODE ETCD1
 
 bootstrap:
   dcs:
@@ -111,12 +123,13 @@ bootstrap:
     loop_wait: 10
     retry_timeout: 10
     maximum_lag_on_failover: 1048576
-
+    postgresql:
+      use_pg_rewind: true
   initdb:
     - encoding: UTF8
     - data-checksums
 
-  pg_hba:
+  pg_hba:  # Add following lines to pg_hba.conf after running 'initdb'
     - host replication replicator 127.0.0.1/32 md5
     - host replication replicator 172.20.0.10/0 md5
     - host replication replicator 172.20.0.11/0 md5
@@ -135,6 +148,7 @@ postgresql:
   listen: 172.20.0.10:5432
   connect_address: 172.20.0.10:5432
   data_dir: /data/patroni
+  pgpass: /tmp/pgpass0
   authentication:
     replication:
       username: replicator
@@ -142,9 +156,11 @@ postgresql:
     superuser:
       username: postgres
       password: zalando
-    rewind:
+    rewind:  # Has no effect on postgres 10 and lower
       username: rewind_user
       password: rewind_password
+  parameters:
+    unix_socket_directories: '.'
 
 tags:
   nofailover: false
@@ -152,6 +168,7 @@ tags:
   clonefrom: false
   nosync: false
 ```
+
 
 **Nota:** para os contêineres `node2` e `node3`, é necessário atualizar o nome e o IP no código acima.
 
@@ -175,6 +192,45 @@ chmod 700 /data/patroni
 
 > Leia o readme [sobre permissões no linux](entendendo-permissoes-linux.md) para saber mais.
 
+### Create a Service Patroni 
+
+````bash
+nano /etc/systemd/system/patroni.service
+
+````
+
+```bash 
+[Unit]
+Description=High availability PostgreSQL Cluster
+After=syslog.target network.target
+
+[Service]
+Type=simple
+
+User=postgres
+Group=postgres
+
+ExecStart=/usr/local/bin/patroni /etc/patroni/patroni.yml
+KillMode=process
+TimeoutSec=30
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
+```
+
+apt install systemctl
+
+systemctl daemon-reload
+
+systemctl enable patroni
+
+systemctl status patroni
+
+systemctl start patroni
+systemctl restart patroni
+
+
 Repetir todo o processo para `node2` e `node3`.
 
 ## Configuração node4 com `etcd`
@@ -185,18 +241,39 @@ disponibilidade para armazenar dados de configuração, coordenar serviços, ou 
 
 > Leia o readme [sobre etcd](etcd.md) para saber mais.
 
-```bash
-export NODE4=172.20.0.13
 
-docker run \
--itd --net clusternet --ip 172.20.0.13 \
---name node4 quay.io/coreos/etcd:latest \
-/usr/local/bin/etcd \
---data-dir=/etcd-data --name node4 \
---initial-advertise-peer-urls http://${NODE4}:2380 --listen-peer-urls http://0.0.0.0:2380 \
---advertise-client-urls http://${NODE4}:2379 --listen-client-urls http://0.0.0.0:2379 \
---initial-cluster node4=http://${NODE4}:2380
+docker run -itd --name=node4 --net clusternet --ip 172.20.0.13 ubuntu:20.04
+
+docker exec -it node4 bash
+
+apt update
+
+apt upgrade
+
+apt install etcd -y
+
+apt install nano -y
+
+nano /etc/default/etcd
+
+```bash
+ETCD_VERSION=v3
+ETCD_LISTEN_PEER_URLS="http://172.20.0.13:2380"
+ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://127.0.0.1:2379,http://172.20.0.13:2379"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://172.20.0.13:2380"
+ETCD_INITIAL_CLUSTER="default=http://172.20.0.13:2380"
+ETCD_ADVERTISE_CLIENT_URLS="http://172.20.0.13:2379"
+ETCD_INITIAL_CLUSTER_TOKEN="node4"
+ETCD_INITIAL_CLUSTER_STATE="new"
 ```
+
+apt install systemctl -y
+
+systemctl enable etcd
+systemctl start etcd
+systemctl restart etcd
+systemctl status etcd
+
 
 ## Configuração node5
 
@@ -249,6 +326,7 @@ listen postgres
     server postgresql_172.20.0.10_5432 172.20.0.10:5432 maxconn 100 check port 8008
     server postgresql_172.20.0.11_5432 172.20.0.11:5432 maxconn 100 check port 8008
     server postgresql_172.20.0.12_5432 172.20.0.12:5432 maxconn 100 check port 8008
+
 ```
 
 > Leia o readme [sobre o HAProxy](haproxy-load-balance.md) para saber mais.
@@ -264,6 +342,9 @@ service haproxy restart
 Entrar em cada um dos três contêineres `node1`, `node2` e `node3` e executar o comando:
 
 ```bash
+docker exec -it node1 bash
+
+
 /usr/local/bin/patroni /etc/patroni/config.yml
 ```
 

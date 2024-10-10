@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/replicacao-database/clusters.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/replicacao-database/entendendo-permissoes-linux.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/replicacao-database/etcd.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/replicacao-database/patroni-conf-disponibilizade.md" afterDir="false" />
+    <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="Configurando clusters, Patroni e HAProxy.">
+      <change afterPath="$PROJECT_DIR$/replicacao-database/replicando-nodes-docker.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/replicacao-database/clusters.md" beforeDir="false" afterPath="$PROJECT_DIR$/replicacao-database/clusters.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +52,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;course-openBootcamp-024-criando-clusters-em-postgresql&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/uanderson/Documentos/spring-data-jpa-hibernate&quot;,
@@ -68,8 +67,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -83,10 +82,28 @@
       <updated>1721704285875</updated>
       <workItem from="1721704286937" duration="12000" />
       <workItem from="1727490677092" duration="53000" />
+      <workItem from="1728049605655" duration="5935000" />
+      <workItem from="1728137022295" duration="1308000" />
+      <workItem from="1728176887696" duration="4821000" />
+      <workItem from="1728322506913" duration="13207000" />
+      <workItem from="1728482375203" duration="45000" />
     </task>
+    <task id="LOCAL-00001" summary="Configurando clusters, Patroni e HAProxy.">
+      <option name="closed" value="true" />
+      <created>1727892279260</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727892279260</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Configurando clusters, Patroni e HAProxy." />
+    <option name="LAST_COMMIT_MESSAGE" value="Configurando clusters, Patroni e HAProxy." />
   </component>
 </project>
