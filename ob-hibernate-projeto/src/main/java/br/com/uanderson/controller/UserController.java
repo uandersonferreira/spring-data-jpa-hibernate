@@ -2,7 +2,6 @@ package br.com.uanderson.controller;
 
 import br.com.uanderson.dao.UserDAO;
 import br.com.uanderson.entities.User;
-import br.com.uanderson.repository.UserRepository;
 import br.com.uanderson.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
