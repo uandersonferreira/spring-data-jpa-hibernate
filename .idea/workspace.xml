@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="Configurando clusters, Patroni e HAProxy.">
-      <change afterPath="$PROJECT_DIR$/replicacao-database/replicando-nodes-docker.md" afterDir="false" />
+    <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="Conf Clusters com erro ):">
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/src/main/java/br/com/uanderson/ObHibernateProjetoApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/src/test/java/br/com/uanderson/ObHibernateProjetoApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/replicacao-database/clusters.md" beforeDir="false" afterPath="$PROJECT_DIR$/replicacao-database/clusters.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="course-openBootcamp-023-criando-replica-de-databases" />
+        <entry key="$PROJECT_DIR$" value="course-openBootcamp-024-criando-clusters-em-postgresql" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,22 +55,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;course-openBootcamp-024-criando-clusters-em-postgresql&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/uanderson/Documentos/spring-data-jpa-hibernate&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "course-openBootcamp-025-projeto-spring-com-hibernate",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/uanderson/Documentos/spring-data-jpa-hibernate/ob-hibernate-projeto",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ob-hibernate-projeto" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -87,6 +99,8 @@
       <workItem from="1728176887696" duration="4821000" />
       <workItem from="1728322506913" duration="13207000" />
       <workItem from="1728482375203" duration="45000" />
+      <workItem from="1728559298939" duration="7685000" />
+      <workItem from="1728650286989" duration="176000" />
     </task>
     <task id="LOCAL-00001" summary="Configurando clusters, Patroni e HAProxy.">
       <option name="closed" value="true" />
@@ -96,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727892279260</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Conf Clusters com erro ):">
+      <option name="closed" value="true" />
+      <created>1728565512702</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1728565512703</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -104,6 +126,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Configurando clusters, Patroni e HAProxy." />
-    <option name="LAST_COMMIT_MESSAGE" value="Configurando clusters, Patroni e HAProxy." />
+    <MESSAGE value="Conf Clusters com erro ):" />
+    <option name="LAST_COMMIT_MESSAGE" value="Conf Clusters com erro ):" />
   </component>
 </project>
