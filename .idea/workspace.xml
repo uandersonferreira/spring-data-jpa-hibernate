@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="Conf Clusters com erro ):">
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/src/main/java/br/com/uanderson/ObHibernateProjetoApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ob-hibernate-projeto/src/test/java/br/com/uanderson/ObHibernateProjetoApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Apostila_SQL.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/Apostila_SQL.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/README.markdown" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hibernate_reference_pt.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/hibernate_reference_pt.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jee-jse.md" beforeDir="false" afterPath="$PROJECT_DIR$/jpa-with-implementation-hibernate/readmes/jee-jse.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jpa-hibernate.odt" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/jpa-hibernate.odt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/orm.png" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/media/orm.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistencia-com-jdbc-hibernate-springdata.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/persistencia-com-jdbc-hibernate-springdata.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "course-openBootcamp-025-projeto-spring-com-hibernate",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/uanderson/Documentos/spring-data-jpa-hibernate/ob-hibernate-projeto",
     "node.js.detected.package.eslint": "true",

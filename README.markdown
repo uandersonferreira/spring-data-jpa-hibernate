@@ -18,18 +18,18 @@ qualquer linguagem de programação orientado a objetos.
 Exemplos de ORM's: Hibernate (Java), Entity Framework (.NET), Django
 (Python), Prisma (TypeScript/JavaScript)
 
-![](asserts/media/image1.png)
+![Object Relational Mapping](asserts/media/image1.png)
 
 **JPA (**Jakarta Persistence API**)**
 
-O Jakarta Persistence API (JPA) é uma especificação do Java que define
+O Jakarta Persistence API (JPA)é uma especificação do Java que define
 como as aplicações em java podem obter persistência e mapeamento
 objeto/relacional (ORM) de dados em base de dados relacionais, para isso
 conta com o auxílio de anotações, para simplificar todo o processo. No
 entanto, o JPA em sí é apenas uma especificação e precisa de uma
 implementação ORM para ser utilizada, no caso do Java é o Hibernate.
 
-Exemplos de implementações JPA + Java: Hibernate, EclipseLink , Apache
+Exemplos de implementações JPA + Java: Hibernate, EclipseLink , Apache
 OpenJPA
 
 **HIBERNATE**
@@ -45,7 +45,7 @@ que tudo funcione.
 
 **JDBC (**Java Database Connectivity**)**
 
-É uma API que faz parte do Java  Standard Edition e sua função principal
+É uma API que faz parte do Java Standard Edition e sua função principal
 é permitir a conexão a sistemas de banco de dados e execução de
 consultas através da linguagem sql, na prática é uma camada
 intermediária entre a aplicação e o banco de dados.
@@ -108,27 +108,27 @@ atualizem e recuperem informações de forma eficiente.
 
 - **Relacionais**:
 
-  - **MySQL**: Um SGBD relacional de código aberto amplamente
+    - **MySQL**: Um SGBD relacional de código aberto amplamente
 
-    > utilizado.
+      > utilizado.
 
-  - **PostgreSQL**: Um SGBD relacional avançado e de código aberto.
+    - **PostgreSQL**: Um SGBD relacional avançado e de código aberto.
 
-  - **Oracle Database**: Um SGBD comercial altamente robusto e
+    - **Oracle Database**: Um SGBD comercial altamente robusto e
 
-    > escalável.
+      > escalável.
 
-  - **Microsoft SQL Server**: Um SGBD relacional desenvolvido pela
-    > Microsoft.
+    - **Microsoft SQL Server**: Um SGBD relacional desenvolvido pela
+      > Microsoft.
 
 - **Não-Relacionais (NoSQL)**:
 
-  - **MongoDB**: Um banco de dados NoSQL orientado a documentos.
+    - **MongoDB**: Um banco de dados NoSQL orientado a documentos.
 
-  - **Cassandra**: Um banco de dados NoSQL distribuído e escalável.
+    - **Cassandra**: Um banco de dados NoSQL distribuído e escalável.
 
-  - **Redis**: Um banco de dados NoSQL de chave-valor de alto
-    > desempenho.
+    - **Redis**: Um banco de dados NoSQL de chave-valor de alto
+      > desempenho.
 
 O pgAdmin, mysql workbeanch, dbbeaver, entre outros: são ferramentas
 gráficas de gerenciamento de banco de dados. (DBMS GUI).
@@ -142,8 +142,8 @@ JPA
 **CONTEXTO DE PERSISTÊNCIA** -- O Contexto de Persistência é o local
 onde um conjunto de instâncias das entidades (**\@Entity**) será
 gerenciado. Em uma aplicação pode haver diversos contextos, sendo que
-cada contexto é gerenciado por um **_EntityManager._**
-O EntityManager monitora todas as alterações realizadas nos objetos
+cada contexto é gerenciado por um**_EntityManager._**
+O EntityManager monitora todas as alterações realizadas nos objetos
 gerenciados. Entretanto, quando um contexto é fechado, todas as
 instâncias das entidades passam a não mais serem gerenciadas
 (desacopladas) e qualquer alteração realizada nesta entidade não é
@@ -156,7 +156,7 @@ Ciclo de vida.
 ![](asserts/media/image7.png)
 
 O contexto de persistência pode possuir dois tipos de
-escopos: transação e estendido. O escopo vai definir o ciclo de vida de
+escopos:transação e estendido. O escopo vai definir o ciclo de vida de
 cada entidade.
 
 ### Escopo de Transação
@@ -179,18 +179,18 @@ cada entidade.
 
 - **Exemplos Reais**:
 
-  - **Operações Bancárias**: Um sistema bancário processando uma
+    - **Operações Bancárias**: Um sistema bancário processando uma
 
-    > transferência de dinheiro. A transferência envolve verificar o
-    > saldo, debitar uma conta e creditar outra, tudo dentro de uma
-    > única transação. Após a transação, as entidades usadas para
-    > essa operação são descartadas.
+      > transferência de dinheiro. A transferência envolve verificar o
+      > saldo, debitar uma conta e creditar outra, tudo dentro de uma
+      > única transação. Após a transação, as entidades usadas para
+      > essa operação são descartadas.
 
-  - **E-commerce: Processamento de Pedido**: Um cliente realiza uma
-    > compra. O sistema verifica a disponibilidade dos produtos,
-    > debita o pagamento e atualiza o estoque, tudo dentro de uma
-    > única transação. Isso garante a consistência dos dados durante
-    > a operação de checkout.
+    - **E-commerce: Processamento de Pedido**: Um cliente realiza uma
+      > compra. O sistema verifica a disponibilidade dos produtos,
+      > debita o pagamento e atualiza o estoque, tudo dentro de uma
+      > única transação. Isso garante a consistência dos dados durante
+      > a operação de checkout.
 
 ### Escopo Estendido
 
@@ -213,25 +213,25 @@ cada entidade.
 
 - **Exemplos Reais**:
 
-  - **Aplicações de Longo Prazo**: Sistema de gerenciamento de
+    - **Aplicações de Longo Prazo**: Sistema de gerenciamento de
 
-    > projetos onde um usuário trabalha em um projeto por vários
-    > dias. As mudanças feitas no projeto são salvas periodicamente,
-    > mas o projeto em si é mantido no contexto de persistência
-    > durante toda a sessão do usuário.
+      > projetos onde um usuário trabalha em um projeto por vários
+      > dias. As mudanças feitas no projeto são salvas periodicamente,
+      > mas o projeto em si é mantido no contexto de persistência
+      > durante toda a sessão do usuário.
 
-  - **Processos de Conversação (Wizard)**: Formulário de inscrição
+    - **Processos de Conversação (Wizard)**: Formulário de inscrição
 
-    > dividido em várias etapas (wizard). Um usuário preenche várias
-    > seções do formulário em diferentes momentos. As informações
-    > preenchidas em cada etapa são mantidas no contexto de
-    > persistência até que o formulário completo seja submetido.
+      > dividido em várias etapas (wizard). Um usuário preenche várias
+      > seções do formulário em diferentes momentos. As informações
+      > preenchidas em cada etapa são mantidas no contexto de
+      > persistência até que o formulário completo seja submetido.
 
-  - **Aplicações de Edição de Dados**: Sistema de edição de
-    > documentos colaborativos. Vários usuários podem editar um
-    > documento ao longo do tempo. As mudanças de cada usuário são
-    > persistidas, mas o documento continua a ser gerenciado pelo
-    > contexto de persistência.
+    - **Aplicações de Edição de Dados**: Sistema de edição de
+      > documentos colaborativos. Vários usuários podem editar um
+      > documento ao longo do tempo. As mudanças de cada usuário são
+      > persistidas, mas o documento continua a ser gerenciado pelo
+      > contexto de persistência.
 
 ### Exemplo de Implementação no Ambiente JEE
 
@@ -258,7 +258,7 @@ EntityManager entityManager;
 
 ## EntityManager
 
-O EntityManager é um serviço responsável por gerenciar as entidades.
+O EntityManager é um serviço responsável por gerenciar as entidades.
 
 ![](asserts/media/image8.png)
 
@@ -266,36 +266,36 @@ O EntityManager é um serviço responsável por gerenciar as entidades.
 
 Uma entidade (@Entity) pode estar em um destes quatro estados:
 
-1.  **NEW**: Quando temos uma nova instância da entidade que não está
+1. **NEW**: Quando temos uma nova instância da entidade que não está
 
-    > associada ao contexto de persistência. Esse é o estado inicial de
-    > uma entidade recém-criada, antes de ser persistida pela primeira
-    > vez.
+   > associada ao contexto de persistência. Esse é o estado inicial de
+   > uma entidade recém-criada, antes de ser persistida pela primeira
+   > vez.
 
-2.  **MANAGED**: É uma instância persistente que está atualmente
+2. **MANAGED**: É uma instância persistente que está atualmente
 
-    > associada ao contexto de persistência. O EntityManager está
-    > gerenciando essa entidade, o que significa que qualquer alteração
-    > feita à entidade será automaticamente sincronizada com o banco de
-    > dados quando a transação for confirmada.
+   > associada ao contexto de persistência. O EntityManager está
+   > gerenciando essa entidade, o que significa que qualquer alteração
+   > feita à entidade será automaticamente sincronizada com o banco de
+   > dados quando a transação for confirmada.
 
-3.  **REMOVED**: É uma instância associada ao contexto de persistência
+3. **REMOVED**: É uma instância associada ao contexto de persistência
 
-    > que será removida do banco de dados quando a transação for
-    > confirmada. Isso acontece quando o método remove() do
-    > EntityManager é chamado.
+   > que será removida do banco de dados quando a transação for
+   > confirmada. Isso acontece quando o método remove() do
+   > EntityManager é chamado.
 
-4.  **DETACHED**: É uma instância que estava no contexto de
+4. **DETACHED**: É uma instância que estava no contexto de
 
-    > persistência, mas não está mais associada ao mesmo. Isso pode
-    > ocorrer quando a sessão é fechada, a transação é concluída, ou
-    > quando explicitamente desanexada usando o método detach() do
-    > EntityManager. Uma entidade nesse estado não é monitorada pelo
-    > EntityManager, portanto, mudanças feitas à entidade não serão
-    > sincronizadas com o banco de dados.
+   > persistência, mas não está mais associada ao mesmo. Isso pode
+   > ocorrer quando a sessão é fechada, a transação é concluída, ou
+   > quando explicitamente desanexada usando o método detach() do
+   > EntityManager. Uma entidade nesse estado não é monitorada pelo
+   > EntityManager, portanto, mudanças feitas à entidade não serão
+   > sincronizadas com o banco de dados.
 
-    O EntityManager é uma interface da JPA que define os métodos para
-    gerenciar as entidades.
+   O EntityManager é uma interface da JPA que define os métodos para
+   gerenciar as entidades.
 
 #### Principais Operações {#principais-operações .list-paragraph}
 
@@ -319,15 +319,15 @@ Uma entidade (@Entity) pode estar em um destes quatro estados:
 
 #### Ciclo de Vida da Entidade {#ciclo-de-vida-da-entidade .list-paragraph}
 
-1.  Instância da entidade é criada (NEW).
+1. Instância da entidade é criada (NEW).
 
-2.  A entidade é persistida pelo EntityManager (MANAGED).
+2. A entidade é persistida pelo EntityManager (MANAGED).
 
-3.  A transação é confirmada e a entidade é sincronizada com o banco de
+3. A transação é confirmada e a entidade é sincronizada com o banco de
 
-    > dados.
+   > dados.
 
-4.  A entidade pode ser removida (REMOVED) ou destacada (DETACHED).
+4. A entidade pode ser removida (REMOVED) ou destacada (DETACHED).
 
 ![](asserts/media/image9.png)
 
