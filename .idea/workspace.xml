@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="Conf Clusters com erro ):">
-      <change beforePath="$PROJECT_DIR$/Apostila_SQL.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/Apostila_SQL.pdf" afterDir="false" />
+    <list default="true" id="63477020-24a3-4c66-aa94-c7e90c7f2fd8" name="Changes" comment="Reorganizando os projetos">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/README.markdown" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hibernate_reference_pt.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/hibernate_reference_pt.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jee-jse.md" beforeDir="false" afterPath="$PROJECT_DIR$/jpa-with-implementation-hibernate/readmes/jee-jse.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jpa-hibernate.odt" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/jpa-hibernate.odt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orm.png" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/media/orm.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/persistencia-com-jdbc-hibernate-springdata.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/asserts/pdf/persistencia-com-jdbc-hibernate-springdata.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,25 +47,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/uanderson/Documentos/spring-data-jpa-hibernate/ob-hibernate-projeto",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/uanderson/Documentos/spring-data-jpa-hibernate/ob-hibernate-projeto&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ob-hibernate-projeto" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/jpa-with-implementation-hibernate/readmes" />
+      <recent name="$PROJECT_DIR$/asserts/media" />
+      <recent name="$PROJECT_DIR$/asserts/pdf" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -98,6 +98,7 @@
       <workItem from="1728482375203" duration="45000" />
       <workItem from="1728559298939" duration="7685000" />
       <workItem from="1728650286989" duration="176000" />
+      <workItem from="1728945812693" duration="2127000" />
     </task>
     <task id="LOCAL-00001" summary="Configurando clusters, Patroni e HAProxy.">
       <option name="closed" value="true" />
@@ -124,6 +125,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Configurando clusters, Patroni e HAProxy." />
     <MESSAGE value="Conf Clusters com erro ):" />
-    <option name="LAST_COMMIT_MESSAGE" value="Conf Clusters com erro ):" />
+    <MESSAGE value="Reorganizando os projetos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorganizando os projetos" />
   </component>
 </project>
